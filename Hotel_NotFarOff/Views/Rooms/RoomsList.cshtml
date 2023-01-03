@@ -1,0 +1,47 @@
+﻿@using Hotel_NotFarOff.Models.Entities
+
+
+<!-- Rooms Section Begin -->
+<section class="rooms-section spad">
+    <div class="container">
+        <div class="row">
+            @model IEnumerable<RoomCategory>
+
+            @foreach (var item in Model)
+            {
+                @* class="col-lg-4 col-md-6"*@
+                <div class="flex-table">
+                    <div class="room-item">
+                        <img src="img/room/room-1.jpg" alt="">
+                        <div class="ri-text">
+                            <h4>@item.Title</h4>
+                            <h3>@item.PricePerDay.ToString("0.00") ₽<span>/За ночь</span></h3>
+                            <table>
+                                <tbody>
+                                    <tr>
+                                        <td class="r-o">Площадь:</td>
+                                        <td>@item.RoomSize кв. м.</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="r-o">Вместительность:</td>
+                                        <td>Максимум гостей @item.NumbeOfSeats</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="r-o">Количество комнат:</td>
+                                        <td>@item.RoomCount</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="r-o">Краткое описание:</td>
+                                        <td>@item.ShortDescription</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <a href="#" class="primary-btn">Подробнее</a>
+                        </div>
+                    </div>
+                </div>
+            }         
+        </div>
+    </div>
+</section>
+<!-- Rooms Section End -->
