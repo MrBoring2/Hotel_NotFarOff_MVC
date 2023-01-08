@@ -1,0 +1,102 @@
+﻿@using Hotel_NotFarOff.Models.Entities
+@using Hotel_NotFarOff.TagHelpersExtentions
+@using Hotel_NotFarOff.ViewModels
+@model RoomCategoryViewModel
+
+@{
+    ViewData["Title"] = "Подробнее о комнате";
+}
+
+<div class="breadcrumb-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="breadcrumb-text">
+                    <h2>@Model.RoomCategory.Title</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="room-details-section spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="room-details-item">
+                    <img src="@Url.Action("GetFileFromBytes", "Rooms", new { id = @Model.RoomCategory.Id})" alt="">
+                    <div id="gallery">
+                        @for (int i = 1; i <= 3; i++)
+                        {
+                            <img src="@Url.Action("GetRoomImage", "Rooms", new { id = @Model.RoomCategory.Id, imageNumber = i})" tabindex="0" alt="">
+                        }
+                    </div>
+                    <div class="rd-text">
+                        <div class="rd-title">
+                            <h3>@Html.DisplayFor(model => model.RoomCategory.Title)</h3>
+                            <div class="rdt-right">
+                                <a href="#">Бронировать сайчас</a>
+                            </div>
+                        </div>
+                        <h2>@Html.DisplayFor(model => model.PricePerDayString)<span>/За ночь</span></h2>
+                        <table>
+                            <tbody>
+                                <tr>
+                                    <td class="r-o">Прощадь:</td>
+                                    <td>@Html.DisplayFor(model => model.RoomCategory.RoomSize)</td>
+                                </tr>
+                                <tr>
+                                    <td class="r-o">Вместимость:</td>
+                                    <td>Максимум человек @Html.DisplayFor(model => model.RoomCategory.NumbeOfSeats)</td>
+                                </tr>
+                                <tr>
+                                    <td class="r-o">Сервисы:</td>
+                                    <td>@Html.DisplayFor(model => model.RoomCategory.Services)</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <p class="f-para">
+                            @Html.DisplayFor(model => model.RoomCategory.Description)
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="room-booking">
+                    <h3>Бронирование</h3>
+                    <form action="#">
+                        <div class="check-date">
+                            <label for="date-in">Заезд:</label>
+                            <input type="text" class="date-input" id="date-in">
+                            <i class="icon_calendar"></i>
+                        </div>
+                        <div class="check-date">
+                            <label for="date-out">Выезд:</label>
+                            <input type="text" class="date-input" id="date-out">
+                            <i class="icon_calendar"></i>
+                        </div>
+
+                        <div class="select-option">
+                            <label for="guest">Guests:</label>
+                            <select id="guest">
+                                <option value="">2 Взрослых</option>
+                                <option value="">3 Взрослых</option>
+                            </select>
+                        </div>
+                        <div class="select-option">
+                            <label for="room">Room:</label>
+                            <select id="room">
+                                <option value="">1 Комната</option>
+                                <option value="">2 Команты</option>
+                            </select>
+                        </div>
+                        <button type="submit">Check Availability</button>
+                    </form>
+                </div>
+            </div>
+
+
+        </div>
+        <a href="javascript:history.go(-1)" class="primary-btn">Назад к списку номеров</a>
+    </div>
+</section>

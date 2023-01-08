@@ -19,9 +19,9 @@
     <link rel="stylesheet" href="~/css/style.css" type="text/css" />
 </head>
 <body>
-   @* <div id="preloder">
+    <div id="preloder">
         <div class="loader"></div>
-    </div>*@
+    </div>
     <!-- Offcanvas Menu Section Begin -->
     <div class="offcanvas-menu-overlay"></div>
     <div class="canvas-open">
@@ -31,11 +31,11 @@
         <div class="canvas-close">
             <i class="icon_close"></i>
         </div>
-        <nav class="mainmenu">
+        <nav class="mainmenu mobile-menu">
             <ul>
-                <li class="active"><a href="@Url.ActionLink("Index", "Home")>Главная</a></li>
-                <li><a href="@Url.ActionLink("Index", "Rooms")">Комнаты</a></li>
-                <li><a href="@Url.ActionLink("Index", "AboutUs")">О нас</a></li>
+                <li class="@Html.IsActive("Home", "Index")"><a href="@Url.Action("Index", "Home")">Главная</a></li>
+                <li class="@Html.IsActive("Rooms", "List")"><a href="@Url.Action("List", "Rooms")">Номера</a></li>
+                <li class="@Html.IsActive("AboutUs", "Index")"><a href="@Url.Action("Index", "AboutUs")">О нас</a></li>
             </ul>
         </nav>
         <div id="mobile-menu-wrap"></div>
@@ -46,8 +46,8 @@
             <a href="#"><i class="fa fa-instagram"></i></a>
         </div>
         <ul class="top-widget">
-            <li><i class="fa fa-phone"></i> (12) 345 67890</li>
-            <li><i class="fa fa-envelope"></i> info.colorlib@gmail.com</li>
+            <li><i class="fa fa-phone"></i> 78545469485</li>
+            <li><i class="fa fa-envelope"></i> someemail@gmail.com</li>
         </ul>
     </div>
     <!-- Offcanvas Menu Section End -->
@@ -67,8 +67,8 @@
                             <nav class="mainmenu">
                                 <ul id="menu">
                                     <li class="@Html.IsActive("Home", "Index")"><a href="@Url.Action("Index", "Home")">Главная</a></li>
-                                    <li class="@Html.IsActive("Home", "Rooms")"><a href="@Url.Action("RoomsList", "Rooms")">Комнаты</a></li>
-                                    <li class="@Html.IsActive("Home", "AboutUs")"><a href="@Url.Action("AboutUs", "AboutUs")">О нас</a></li>
+                                    <li class="@Html.IsActive("Rooms", "List")"><a href="@Url.Action("List", "Rooms")">Номера</a></li>
+                                    <li class="@Html.IsActive("AboutUs", "Index")"><a href="@Url.Action("Index", "AboutUs")">О нас</a></li>
                                 </ul>
                             </nav>
                         </div>
@@ -105,7 +105,7 @@
                             </div>
                         </div>
                     </div>
-                   
+
                 </div>
             </div>
         </div>

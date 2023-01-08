@@ -1169,8 +1169,10 @@ pre {
     }
 
     .col-md-6 {
+        display: flex;
         -ms-flex: 0 0 50%;
         flex: 0 0 50%;
+        flex-wrap: wrap;
         max-width: 50%
     }
 
@@ -1409,6 +1411,11 @@ pre {
         flex: 0 0 33.333333%;
         max-width: 33.333333%
     }
+
+    .float-right{
+        float:right;
+    }
+
 
     .col-lg-5 {
         -ms-flex: 0 0 41.666667%;

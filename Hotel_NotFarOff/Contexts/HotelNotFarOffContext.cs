@@ -20,7 +20,7 @@ namespace Hotel_NotFarOff.Contexts
         public virtual DbSet<Booking> Bookings { get; set; }
         public virtual DbSet<BookingStatus> BookingStatuses { get; set; }
         public virtual DbSet<Employee> Employees { get; set; }
-        public virtual DbSet<Galery> Galeries { get; set; }
+        public virtual DbSet<RoomImage> RoomImages { get; set; }
         public virtual DbSet<Guest> Guests { get; set; }
         public virtual DbSet<Post> Posts { get; set; }
         public virtual DbSet<Room> Rooms { get; set; }
@@ -29,11 +29,11 @@ namespace Hotel_NotFarOff.Contexts
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-//            if (!optionsBuilder.IsConfigured)
-//            {
-//#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-//                optionsBuilder.UseSqlServer("Server=MRBORINGPC\\SQLEXPRESS01;Database=HotelNotFarOff;Trusted_Connection=True;");
-//            }
+            //            if (!optionsBuilder.IsConfigured)
+            //            {
+            //#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+            //                optionsBuilder.UseSqlServer("Server=MRBORINGPC\\SQLEXPRESS01;Database=HotelNotFarOff;Trusted_Connection=True;");
+            //            }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -118,20 +118,23 @@ namespace Hotel_NotFarOff.Contexts
                     .HasConstraintName("FK_Employee_Post");
             });
 
-            modelBuilder.Entity<Galery>(entity =>
+            modelBuilder.Entity<RoomImage>(entity =>
             {
-                entity.ToTable("Galery");
+                entity.ToTable("RoomImage");
 
                 entity.Property(e => e.Image)
                     .IsRequired()
                     .HasColumnType("image");
 
                 entity.HasOne(d => d.RoomCategory)
-                    .WithMany(p => p.Galeries)
+                    .WithMany(p => p.RoomImages)
                     .HasForeignKey(d => d.RoomCategoryId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Galery_RoomCategory");
             });
+
+
+          
 
             modelBuilder.Entity<Guest>(entity =>
             {
@@ -213,6 +216,9 @@ namespace Hotel_NotFarOff.Contexts
                     .IsRequired()
                     .HasMaxLength(100)
                     .IsUnicode(false);
+                entity.Property(e => e.MainImage)
+                    .IsRequired()
+                    .HasColumnType("image");
             });
 
             modelBuilder.Entity<SiteProfle>(entity =>

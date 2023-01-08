@@ -39,6 +39,10 @@ html, body {
     font-smoothing: antialiased;
 }
 
+/*section {
+    background-color: #f7f5f5;
+}
+*/
 h1, h2, h3, h4, h5, h6 {
     margin: 0;
     color: #111111;
@@ -90,16 +94,58 @@ input:focus, select:focus, button:focus, textarea:focus {
 a:hover, a:focus {
     text-decoration: none;
     outline: none;
-    color: #fff;
+    color: #1c1c1c;
 }
 
 ul, ol {
     padding: 0;
     margin: 0;
 }
+
+.flex-table {
+    display: inline-block;
+}
+
+/*---------------------
+  Star raiting
+-----------------------*/
+.ratingStar {
+    float: left;
+    display: inline-block
+}
+
+    .ratingStar span {
+        float: right;
+        position: relative;
+    }
+
+        .ratingStar span input {
+            position: absolute;
+            opacity: 0;
+        }
+
+        .ratingStar span label {
+            display: inline-block;
+            background-color: #ccc;
+            clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+            width: 30px;
+            height: 30px;
+        }
+
+
+        .ratingStar span:hover ~ span label,
+        .ratingStar span:hover label,
+        .ratingStar span.checked label,
+        .ratingStar span.checked ~ span label {
+            background: #F90;
+            color: #FFF;
+        }
+
+
 /*---------------------
   Helper CSS
 -----------------------*/
+
 
 .section-title {
     text-align: center;
@@ -145,7 +191,7 @@ ul, ol {
 .primary-btn {
     display: inline-block;
     font-size: 13px;
-    color: #ffffff;
+    color: #000000;
     text-transform: uppercase;
     letter-spacing: 2px;
     font-weight: 700;
@@ -297,9 +343,14 @@ ul, ol {
   Header
 -----------------------*/
 
-.header-section.header-normal .menu-item {
+.header-section {
     -webkit-box-shadow: 0px 12px 15px rgba(36, 11, 12, 0.05);
-    box-shadow: 0px 12px 15px rgba(36, 11, 12, 0.05);
+}
+
+
+.header-normal .menu-item {
+    -webkit-box-shadow: 0px 12px 15px rgba(36, 11, 12, 0.05);
+    box-shadow: 0 0 3px #ccc;
 }
 
 .top-nav {
@@ -562,10 +613,74 @@ ul, ol {
 .offcanvas-menu-wrapper {
     display: none;
 }
+
+/*---------------------
+  Room galery
+-----------------------*/
+
+
+
+#gallery {
+    position: relative;
+    padding-top: 10%;
+    left: 16.55%;
+    -moz-user-select: none;
+    user-select: none;
+    display: inline-block
+}
+
+
+    #gallery img {
+        width: 32.93%;
+        -webkit-transform: translate(-0%, -50%);
+        transform: translate(-50%, -50%);
+        -moz-user-select: none;
+        user-select: none;
+        cursor: zoom-in;
+    }
+
+        #gallery img:nth-child(4n-2) {
+            left: 37.5%;
+        }
+
+        #gallery img:nth-child(4n-1) {
+            left: 62.5%;
+        }
+
+        #gallery img:nth-child(4n) {
+            left: 87.5%;
+        }
+
+        #gallery img:nth-child(n+5) {
+            top: 75%;
+        }
+
+        #gallery img:focus {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            z-index: 31;
+            min-width: 70%;
+            outline: none;
+            pointer-events: none;
+        }
+
+            #gallery img:focus ~ div {
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                z-index: 30;
+                background: rgba(240,240,240,.9);
+                cursor: zoom-out;
+            }
+
+
+
 /*---------------------
   Hero
 -----------------------*/
-
 .hero-section {
     position: relative;
     padding-top: 60px;
@@ -1339,22 +1454,27 @@ ul, ol {
 }
 
 .room-item {
-    
     margin-bottom: 30px;
 }
 
     .room-item img {
-        min-width: 100%;
+        max-width: 60%;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        padding: 0 18px 28px 0px;
     }
+
+
 
     .room-item .ri-text {
         border: 1px solid #ebebeb;
-        border-top: none;
         padding: 24px 24px 30px 28px;
     }
 
         .room-item .ri-text h4 {
             color: #19191a;
+            text-align: center;
             margin-bottom: 17px;
         }
 
@@ -1373,6 +1493,8 @@ ul, ol {
 
         .room-item .ri-text table {
             margin-bottom: 18px;
+            display: flex;
+            flex-wrap: wrap;
         }
 
             .room-item .ri-text table tbody tr td {
@@ -1385,9 +1507,13 @@ ul, ol {
                     width: 125px;
                 }
 
-        .room-item .ri-text .primary-btn {
-            color: #19191a;
-        }
+    .room-item .primary-btn {
+        vertical-align: bottom;
+        bottom: 0;
+        margin-top: 25px;
+        margin-bottom: 0;
+        color: #19191a;
+    }
 
 .room-pagination {
     text-align: center;
@@ -1491,6 +1617,7 @@ ul, ol {
         }
 
             .room-details-item .rd-text table tbody tr td.r-o {
+                white-space: pre-line;
                 width: 120px;
                 color: #707079;
             }
@@ -1914,7 +2041,7 @@ ul, ol {
             margin-right: 0;
         }
 
-        .blog-details-text .bd-pic .bp-item img {
+        .blog-details-text .bd-pic .bp-item #main-image {
             min-width: 100%;
         }
 
@@ -2728,9 +2855,5 @@ ul, ol {
 
     .blog-details-text .comment-option .single-comment-item .sc-text a {
         margin-bottom: 10px;
-    }
-
-    .flex-table {
-        display: table
     }
 }

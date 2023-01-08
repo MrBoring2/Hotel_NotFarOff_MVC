@@ -7,7 +7,7 @@ namespace Hotel_NotFarOff.Models.Entities
     {
         public RoomCategory()
         {
-            Galeries = new HashSet<Galery>();
+            RoomImages = new HashSet<RoomImage>();
             Rooms = new HashSet<Room>();
         }
 
@@ -20,8 +20,8 @@ namespace Hotel_NotFarOff.Models.Entities
         public string ShortDescription { get; set; }
         public string Description { get; set; }
         public string Services { get; set; }
-
-        public virtual ICollection<Galery> Galeries { get; set; }
+        public byte[] MainImage { get; set; }
+        public virtual ICollection<RoomImage> RoomImages { get; set; }
         public virtual ICollection<Room> Rooms { get; set; }
     }
 }

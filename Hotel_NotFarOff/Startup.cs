@@ -25,6 +25,10 @@ namespace Hotel_NotFarOff
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            services.AddResponseCompression(options =>
+            { 
+                options.EnableForHttps = true;
+            });
             services.AddDbContext<HotelNotFarOffContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Connection")));
         }
 
@@ -39,6 +43,7 @@ namespace Hotel_NotFarOff
             {
                 app.UseExceptionHandler("/Home/Error");
             }
+            app.UseResponseCompression();
             app.UseStaticFiles();
 
             app.UseRouting();

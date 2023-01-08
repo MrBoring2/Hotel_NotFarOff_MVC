@@ -11,6 +11,11 @@
 
 (function ($) {
 
+    $('#galery-link').click(function ($e) {
+        return false;
+    });
+
+
     /*------------------
         Preloader
     --------------------*/
@@ -50,8 +55,8 @@
     });
 
     /*------------------
-		Navigation
-	--------------------*/
+        Navigation
+    --------------------*/
     $(".mobile-menu").slicknav({
         prependTo: '#mobile-menu-wrap',
         allowParentLinks: true
@@ -60,7 +65,7 @@
     /*------------------
         Hero Slider
     --------------------*/
-   $(".hero-slider").owlCarousel({
+    $(".hero-slider").owlCarousel({
         loop: true,
         margin: 0,
         items: 1,
@@ -74,7 +79,7 @@
     });
 
     /*------------------------
-		Testimonial Slider
+        Testimonial Slider
     ----------------------- */
     $(".testimonial-slider").owlCarousel({
         items: 1,
@@ -94,8 +99,8 @@
     });
 
     /*------------------
-		Date Picker
-	--------------------*/
+        Date Picker
+    --------------------*/
     $(".date-input").datepicker({
         minDate: 0,
         dateFormat: 'dd MM, yy'
@@ -121,10 +126,30 @@
     $.datepicker.setDefaults($.datepicker.regional['ru']);
 
     /*------------------
-		Nice Select
-	--------------------*/
+        Nice Select
+    --------------------*/
     $("select").niceSelect();
 
-	
+
+    /*------------------
+        Star raiting
+    --------------------*/
+
+    $(document).ready(function () {
+
+        // Check Radio-box
+        $(".ratingStar input:radio").attr("checked", false);
+
+        $('.ratingStar input').click(function () {
+            $(".ratingStar span").removeClass('checked');
+            $(this).parent().addClass('checked');
+        });
+
+        //$('input:radio').change(
+        //    function () {
+        //        var userRating = this.value;
+        //        alert(userRating);
+        //    });
+    });
 
 })(jQuery);
