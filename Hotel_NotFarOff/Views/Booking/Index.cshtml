@@ -1,0 +1,68 @@
+﻿@{
+    ViewData["Title"] = "Бронирование";
+}
+
+<!-- Breadcrumb Section Begin -->
+<div class="breadcrumb-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="breadcrumb-text">
+                    <h2>Бронирование</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="rooms-section spad">
+    <div class="container">
+        <form action="#">
+            <div class="booking-form-row">
+                <div>
+                    <div class="check-date">
+                        <label for="date-in">Заезд:  </label>
+                        <i class="icon_calendar"></i>
+                        <input type="text" class="date-input" id="date-in">
+                    </div>
+                    <div class="check-date">
+                        <label for="date-out">Выезд:  </label>
+                        <i class="icon_calendar"></i>
+                        <input type="text" class="date-input" id="date-out">
+                    </div>
+
+                </div>
+
+                <div class="select-option">
+                    <label for="guest">Гости:  </label>
+                    <select id="guest">
+                        <option value="1">1 Взрослый</option>
+                        <option value="2">2 Взрослых</option>
+                        <option value="3">3 Взрослых</option>
+                        <option value="4">4 Взрослых</option>
+                    </select>
+
+                </div>
+                <div class="select-option">
+
+                    <label for="child">Дети:  </label>
+                    <select id="child">
+                        <option value="0">Без детей</option>
+                        <option value="1">1 ребёнок</option>
+                        <option value="2">2 ребёнка</option>
+                    </select>
+                </div>
+                <button id="btnSearch" type="submit">Проверить доступность</button>
+            </div>
+        </form>
+
+
+        <div id="room-list"> </div>
+
+    </div>
+</section>
+
+@section Booking
+    {
+    <script src="@Url.Content("~/js/booking.js")"></script>
+}

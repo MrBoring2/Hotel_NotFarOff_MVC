@@ -17,12 +17,12 @@
             <div class="col-xl-4 col-lg-5 offset-xl-2 offset-lg-1">
                 <div class="booking-form">
                     <h3>Бронирование комнаты</h3>
-                    <form action="#">
-                         <div class="check-date">
-                                <label for="date-in">Заезд:</label>
-                                <input type="text" class="date-input" id="date-in">
-                                <i class="icon_calendar"></i>
-                            </div>
+                    <form action="@Url.Action("Index", "Booking")">
+                        <div class="check-date">
+                            <label for="date-in">Заезд:</label>
+                            <input type="text" class="date-input" id="date-in">
+                            <i class="icon_calendar"></i>
+                        </div>
                         <div class="check-date">
                             <label for="date-out">Выезд:</label>
                             <input type="text" class="date-input" id="date-out">
@@ -54,5 +54,5 @@
         <div class="hs-item set-bg" data-setbg="@Url.Content("~/img/hero/hero-2.jpg")"></div>
         <div class="hs-item set-bg" data-setbg="@Url.Content("~/img/hero/hero-3.jpg")"></div>
     </div>
-  
+
 </section>

@@ -17,28 +17,29 @@ namespace Hotel_NotFarOff.Controllers
     public class RoomsController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly HotelNotFarOffContext db;
+        private readonly HotelNotFarOffContext _db;
         public RoomsController(ILogger<HomeController> logger, HotelNotFarOffContext context)
         {
-            db = context;
+            _logger = logger;
+            _db = context;
         }
         public async Task<IActionResult> List()
         {
-            return View(await db.RoomCategories.Select(p => new RoomInListViewModel(p.Id, p.Title, p.PricePerDay, p.RoomCount, p.NumbeOfSeats, p.RoomSize, p.ShortDescription, p.MainImage)).AsQueryable().ToListAsync());
+            return View(await _db.RoomCategories.Select(p => new RoomInListViewModel(p.Id, p.Title, p.PricePerDay, p.RoomCount, p.NumbeOfSeats, p.RoomSize, p.ShortDescription, p.MainImage)).AsQueryable().ToListAsync());
         }
         public async Task<IActionResult> Details(int roomCategoryId)
         {
-            var room = await db.RoomCategories.FirstOrDefaultAsync(p => p.Id == roomCategoryId);
+            var room = await _db.RoomCategories.FirstOrDefaultAsync(p => p.Id == roomCategoryId);
             return View(new RoomCategoryViewModel(room));
         }
 
         public FileResult GetFileFromBytes(int id)
         {
-            return File(db.RoomCategories.FirstOrDefault(p => p.Id == id).MainImage, "image/png");
+            return File(_db.RoomCategories.FirstOrDefault(p => p.Id == id).MainImage, "image/png");
         }
         public FileResult GetRoomImage(int id, int imageNumber)
         {
-            return File(db.RoomImages.Where(p => p.RoomCategoryId == id).Skip(imageNumber - 1).FirstOrDefault().Image, "image/png");
+            return File(_db.RoomImages.Where(p => p.RoomCategoryId == id).Skip(imageNumber - 1).FirstOrDefault().Image, "image/png");
         }
 
     }

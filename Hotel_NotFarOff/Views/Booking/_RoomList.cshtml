@@ -1,0 +1,15 @@
+﻿@using Hotel_NotFarOff.ViewModels
+@model IEnumerable<RoomInListViewModel>
+
+@foreach (var item in Model)
+{
+    <div class="mini-room-detail">
+        <a href="@Url.Action("Details", "Rooms", new {roomCategoryId = @item.Id})"><img id="main-image" src="@Url.Action("GetFileFromBytes", "Rooms", new { id = @item.Id})" alt="Подробнее" /></a>
+        <h4 align="left">@item.Title</h4>
+        <div>
+            <p>вместительность @item.NumbeOfSeats чел.</p>
+            <p>@item.RoomSize кв. м.</p>
+        </div>
+        <button>Выбрать</button>
+    </div>
+}

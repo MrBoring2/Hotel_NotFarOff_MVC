@@ -14,7 +14,6 @@ namespace Hotel_NotFarOff.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly HotelNotFarOffContext db;
         public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
@@ -24,7 +23,10 @@ namespace Hotel_NotFarOff.Controllers
         {
             return View();
         }
-
+        public IActionResult AboutUs()
+        {
+            return View();
+        }
         //public IActionResult Privacy()
         //{
         //    return View();

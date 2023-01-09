@@ -710,6 +710,53 @@ ul, ol {
         margin-bottom: 35px;
     }
 
+.booking-form-row {
+    display: flex;
+    position: relative;
+    flex-wrap: wrap;
+    height: 20px;
+}
+    /**/
+    .booking-form-row > * {
+        display: flex;
+    }
+
+    .booking-form-row label {
+        margin-left: 5px;
+        margin-right: 5px;
+    }
+
+    .booking-form-row i {
+        margin-right: 2px;
+    }
+
+    .booking-form-row #date-in {
+        margin-right: 10px;
+        height: 30px;
+    }
+
+    .booking-form-row #date-out {
+        margin-right: 10px;
+        height: 30px;
+    }
+
+    .booking-form-row #guest {
+        padding-right: 100px;
+        margin-right: 10px;
+        height: 30px;
+    }
+
+    .booking-form-row #child {
+        margin-right: 10px;
+        height: 30px;
+    }
+
+    .booking-form-row button {
+        margin-left: 10px;
+        height: 30px;
+    }
+
+
 .booking-form {
     background: #ffffff;
     padding: 44px 40px 50px 40px;
@@ -1541,10 +1588,54 @@ ul, ol {
             background: #dfa974;
             color: #ffffff;
         }
+
+/*-----------------------
+  Room Mini-List Section
+-------------------------*/
+
+#room-list {
+    position: relative;
+    display: flex;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    flex-wrap: wrap;
+    margin-top: 80px;
+}
+
+
+.mini-room-detail {
+    border: 1px solid #D3D3D3;
+    position: relative;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    width: 31.83%;
+    border-radius: 5px;
+    display: inline-block;
+    padding: 5px;
+    margin: 5px;
+}
+
+    .mini-room-detail button {
+        right: 0;
+        width: 40%;
+        margin: 20px;
+        position: absolute;
+        bottom: 0;
+        font-size: 14px;
+        text-transform: uppercase;
+        border: 1px solid #dfa974;
+        border-radius: 2px;
+        color: white;
+        background: #dfa974;
+        font-weight: 500;
+    }
+
+
+
 /*-----------------------
   Room Details Section
 -------------------------*/
-
 .room-details-section {
     padding-top: 0;
     padding-bottom: 80px;
@@ -1839,63 +1930,142 @@ ul, ol {
             bottom: 17px;
         }
 
-    .room-booking form .select-option {
-        margin-bottom: 15px;
-    }
+.booking-form-row .check-date {
+    position: relative;
+    margin-bottom: 15px;
+}
 
-        .room-booking form .select-option label {
-            font-size: 14px;
-            color: #707079;
-            display: block;
-            margin-bottom: 10px;
-        }
-
-        .room-booking form .select-option .nice-select {
-            border-radius: 2px;
-            border: 1px solid #ebebeb;
-            height: 50px;
-            line-height: 50px;
-            outline: none;
-            padding-left: 20px;
-            width: 100%;
-            float: none;
-        }
-
-            .room-booking form .select-option .nice-select:after {
-                border-bottom: 2px solid #dfa974;
-                border-right: 2px solid #dfa974;
-                height: 10px;
-                margin-top: 0;
-                right: 20px;
-                width: 10px;
-                top: 36%;
-            }
-
-            .room-booking form .select-option .nice-select span {
-                font-size: 16px;
-                color: #19191a;
-                text-transform: uppercase;
-                font-weight: 500;
-            }
-
-            .room-booking form .select-option .nice-select .list {
-                margin-top: 0;
-                width: 100%;
-            }
-
-    .room-booking form button {
-        display: block;
+    .booking-form-row .check-date label {
         font-size: 14px;
-        text-transform: uppercase;
-        border: 1px solid #dfa974;
-        border-radius: 2px;
-        color: #dfa974;
-        font-weight: 500;
-        background: transparent;
-        width: 100%;
-        height: 46px;
-        margin-top: 30px;
+        color: #707079;
+        margin-bottom: 10px;
     }
+
+    .booking-form-row .check-date input {
+        
+        border: 1px solid #ebebeb;
+        border-radius: 2px;
+        font-size: 16px;
+        color: #19191a;
+        text-transform: uppercase;
+        font-weight: 500;
+    }
+
+    .booking-form-row .check-date i {
+        color: #dfa974;
+        position: absolute;
+        right: 18px;
+        bottom: 17px;
+    }
+
+.room-booking form .select-option {
+    margin-bottom: 15px;
+}
+
+
+    .room-booking form .select-option label {
+        font-size: 14px;
+        color: #707079;
+        display: block;
+        margin-bottom: 10px;
+    }
+
+    .room-booking form .select-option .nice-select {
+        border-radius: 2px;
+        border: 1px solid #ebebeb;
+        height: 50px;
+        line-height: 50px;
+        outline: none;
+        padding-left: 20px;
+        width: 100%;
+        float: none;
+    }
+
+        .room-booking form .select-option .nice-select:after {
+            border-bottom: 2px solid #dfa974;
+            border-right: 2px solid #dfa974;
+            height: 10px;
+            margin-top: 0;
+            right: 20px;
+            width: 10px;
+            top: 36%;
+        }
+
+        .room-booking form .select-option .nice-select span {
+            font-size: 16px;
+            color: #19191a;
+            text-transform: uppercase;
+            font-weight: 500;
+        }
+
+        .room-booking form .select-option .nice-select .list {
+            margin-top: 0;
+            width: 100%;
+        }
+
+.booking-form-row .select-option label {
+    height: 30px;
+    font-size: 14px;
+    color: #707079;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.booking-form-row .select-option .nice-select {
+    border-radius: 2px;
+    border: 1px solid #ebebeb;
+    height: 50px;
+    line-height: 50px;
+    outline: none;
+    padding-left: 20px;
+    width: 100%;
+    float: none;
+}
+
+    .booking-form-row .select-option .nice-select:after {
+        border-bottom: 2px solid #dfa974;
+        border-right: 2px solid #dfa974;
+        height: 10px;
+        margin-top: 0;
+        right: 20px;
+        width: 10px;
+        top: 36%;
+    }
+
+    .booking-form-row .select-option .nice-select span {
+        font-size: 16px;
+        color: #19191a;
+        text-transform: uppercase;
+        font-weight: 500;
+    }
+
+    .booking-form-row .select-option .nice-select .list {
+        margin-top: 0;
+        width: 100%;
+    }
+
+.room-booking form button {
+    display: block;
+    font-size: 14px;
+    text-transform: uppercase;
+    border: 1px solid #dfa974;
+    border-radius: 2px;
+    color: #dfa974;
+    font-weight: 500;
+    background: transparent;
+    width: 100%;
+    height: 46px;
+    margin-top: 30px;
+}
+.booking-form-row button {
+    font-size: 14px;
+    text-transform: uppercase;
+    border: 1px solid #dfa974;
+    border-radius: 2px;
+    color: white;
+    background: #dfa974;
+    font-weight: 500;
+}
 /*---------------------
   Blog Section
 -----------------------*/

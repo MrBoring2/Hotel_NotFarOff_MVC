@@ -35,7 +35,7 @@
             <ul>
                 <li class="@Html.IsActive("Home", "Index")"><a href="@Url.Action("Index", "Home")">Главная</a></li>
                 <li class="@Html.IsActive("Rooms", "List")"><a href="@Url.Action("List", "Rooms")">Номера</a></li>
-                <li class="@Html.IsActive("AboutUs", "Index")"><a href="@Url.Action("Index", "AboutUs")">О нас</a></li>
+                <li class="@Html.IsActive("Home", "AboutUs")"><a href="@Url.Action("AboutUs", "Home")">О нас</a></li>
             </ul>
         </nav>
         <div id="mobile-menu-wrap"></div>
@@ -68,7 +68,7 @@
                                 <ul id="menu">
                                     <li class="@Html.IsActive("Home", "Index")"><a href="@Url.Action("Index", "Home")">Главная</a></li>
                                     <li class="@Html.IsActive("Rooms", "List")"><a href="@Url.Action("List", "Rooms")">Номера</a></li>
-                                    <li class="@Html.IsActive("AboutUs", "Index")"><a href="@Url.Action("Index", "AboutUs")">О нас</a></li>
+                                    <li class="@Html.IsActive("Home", "AboutUs")"><a href="@Url.Action("AboutUs", "Home")">О нас</a></li>
                                 </ul>
                             </nav>
                         </div>
@@ -139,6 +139,7 @@
     <script src="~/js/owl.carousel.min.js"></script>
     <script src="~/js/main.js"></script>
     <script type="text/javascript" src="~/js/datepicker_ru.js"></script>
-    @await RenderSectionAsync("Scripts", required: false)
+
+    @await RenderSectionAsync("Booking", required: false)
 </body>
 </html>
