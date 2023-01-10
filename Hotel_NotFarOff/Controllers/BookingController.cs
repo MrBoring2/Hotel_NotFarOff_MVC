@@ -1,9 +1,13 @@
 ﻿using Hotel_NotFarOff.Contexts;
+using Hotel_NotFarOff.Models;
 using Hotel_NotFarOff.Models.Entities;
 using Hotel_NotFarOff.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -39,6 +43,17 @@ namespace Hotel_NotFarOff.Controllers
             }
 
             return PartialView("_RoomList", rooms.Select(p => new RoomInListViewModel(p.Id, p.Title, p.PricePerDay, p.RoomCount, p.NumbeOfSeats, p.RoomSize, p.ShortDescription, p.MainImage)));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Confirm([FromBody] JObject checkIn)
+        {
+            var bookingData = JsonConvert.DeserializeObject<BookingData>(checkIn.ToString());
+            bookingData.CheckIn = bookingData.CheckIn.ToLocalTime();
+            bookingData.CheckOut = bookingData.CheckOut.ToLocalTime();
+            var roomCategory = await _db.RoomCategories.FirstOrDefaultAsync(p => p.Id == bookingData.RoomCategoryId);
+            return PartialView("_Confirm", new BookingViewModel(bookingData, roomCategory));
+
         }
     }
 }

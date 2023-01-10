@@ -4,12 +4,14 @@
 @foreach (var item in Model)
 {
     <div class="mini-room-detail">
+        <input id="roomCategoryId" type="hidden" value="@item.Id"/>
         <a href="@Url.Action("Details", "Rooms", new {roomCategoryId = @item.Id})"><img id="main-image" src="@Url.Action("GetFileFromBytes", "Rooms", new { id = @item.Id})" alt="Подробнее" /></a>
         <h4 align="left">@item.Title</h4>
         <div>
             <p>вместительность @item.NumbeOfSeats чел.</p>
             <p>@item.RoomSize кв. м.</p>
         </div>
-        <button>Выбрать</button>
+        <h4>@item.PricePerDay.ToString("0.00") ₽<span>/За ночь</span></h4>
+        <button id="btnConfirm">Выбрать</button>
     </div>
 }

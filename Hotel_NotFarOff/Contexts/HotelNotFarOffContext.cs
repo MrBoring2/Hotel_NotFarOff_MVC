@@ -142,7 +142,6 @@ namespace Hotel_NotFarOff.Contexts
             {
                 entity.ToTable("Guest");
 
-                entity.Property(e => e.DateOfBirth).HasColumnType("date");
 
                 entity.Property(e => e.FullName)
                     .IsRequired()

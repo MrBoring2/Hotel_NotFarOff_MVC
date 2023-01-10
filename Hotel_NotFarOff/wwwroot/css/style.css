@@ -1631,6 +1631,19 @@ ul, ol {
         font-weight: 500;
     }
 
+    .mini-room-detail h4 {
+        color: #dfa974;
+        font-weight: 700;
+        margin-bottom: 14px;
+    }
+
+        .mini-room-detail h4 span {
+            font-family: "Cabin", sans-serif;
+            font-size: 14px;
+            font-weight: 400;
+            color: #19191a;
+        }
+
 
 
 /*-----------------------
@@ -1942,7 +1955,6 @@ ul, ol {
     }
 
     .booking-form-row .check-date input {
-        
         border: 1px solid #ebebeb;
         border-radius: 2px;
         font-size: 16px;
@@ -2057,6 +2069,7 @@ ul, ol {
     height: 46px;
     margin-top: 30px;
 }
+
 .booking-form-row button {
     font-size: 14px;
     text-transform: uppercase;

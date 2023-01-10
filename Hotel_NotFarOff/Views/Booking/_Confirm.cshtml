@@ -1,0 +1,25 @@
+﻿@using Hotel_NotFarOff.ViewModels
+@model BookingViewModel
+
+<div>
+    <div>
+        <p>заезд</p>
+        <h2>@Model.BookingData.CheckIn</h2>
+    </div>
+
+    <div>
+        <p>взрослых: @Model.BookingData.AdultCount</p>
+        <p>детей: @Model.BookingData.ChildCount</p>
+        <p>@Model.NightCount ночей</p>
+    </div>
+
+    <div>
+        <p>выезд</p>
+        <h2>@Model.BookingData.CheckOut</h2>
+    </div>
+</div>
+
+<div>
+    <h2>@Model.RoomCategory.Title</h2>
+    <h2>@Model.TotalPrice</h2>
+</div>

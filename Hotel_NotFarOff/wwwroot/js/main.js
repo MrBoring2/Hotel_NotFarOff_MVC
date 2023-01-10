@@ -105,6 +105,7 @@
         minDate: 0,
         dateFormat: 'dd MM, yy'
     });
+   
 
     $.datepicker.regional['ru'] = {
         closeText: 'Закрыть',
