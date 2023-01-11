@@ -1,7 +1,8 @@
-﻿@{
+﻿@using Hotel_NotFarOff.ViewModels
+@{
     ViewData["Title"] = "Бронирование";
 }
-
+@model BookingViewModel
 <!-- Breadcrumb Section Begin -->
 <div class="breadcrumb-section">
     <div class="container">
@@ -17,52 +18,44 @@
 
 <section class="rooms-section spad">
     <div class="container">
-
-
-        <form action="#">
-            <div class="booking-form-row">
-                <div>
-                    <div class="check-date">
-                        <label for="date-in">Заезд:  </label>
-                        <i class="icon_calendar"></i>
-                        <input type="text" class="date-input" id="date-in">
-                    </div>
-                    <div class="check-date">
-                        <label for="date-out">Выезд:  </label>
-                        <i class="icon_calendar"></i>
-                        <input type="text" class="date-input" id="date-out">
-                    </div>
-
+        <div class="booking-form-row">
+            <div>
+                <div class="check-date">
+                    <label asp-for="BookingData.CheckIn">Заезд:</label>
+                    <input type="text" value="@Model.BookingData.CheckIn" readonly="readonly" asp-for="BookingData.CheckIn" class="date-input" id="date-in">
+                    <i class="icon_calendar"></i>
+                </div>
+                <div class="check-date">
+                    <label asp-for="BookingData.CheckOut">Выезд:</label>
+                    <input type="text" value="@Model.BookingData.CheckOut" readonly="readonly" asp-for="BookingData.CheckOut" class="date-input" id="date-out">
+                    <i class="icon_calendar"></i>
                 </div>
 
-                <div class="select-option">
-                    <label for="guest">Гости:  </label>
-                    <select id="guest">
-                        <option value="1">1 Взрослый</option>
-                        <option value="2">2 Взрослых</option>
-                        <option value="3">3 Взрослых</option>
-                        <option value="4">4 Взрослых</option>
-                    </select>
-
-                </div>
-                <div class="select-option">
-
-                    <label for="child">Дети:  </label>
-                    <select id="child">
-                        <option value="0">Без детей</option>
-                        <option value="1">1 ребёнок</option>
-                        <option value="2">2 ребёнка</option>
-                    </select>
-                </div>
-                <button id="btnSearch" type="submit">Проверить доступность</button>
             </div>
-        </form>
 
+            <div class="select-option">
+                <label asp-for="BookingData.AdultCount" for="guest">Гости:  </label>
+                <select asp-for="BookingData.AdultCount" id="guest">
+                    <option value="1">1 Взрослый</option>
+                    <option value="2">2 Взрослых</option>
+                    <option value="3">3 Взрослых</option>
+                    <option value="4">4 Взрослых</option>
+                </select>
 
-        <div id="room-list"> </div>
-        <div class="col-lg-8" id="booking-confirm">
+            </div>
+            <div class="select-option">
+                <label asp-for="BookingData.ChildCount" for="child">Дети:  </label>
+                <select asp-for="BookingData.ChildCount" id="child">
+                    <option value="0">Без детей</option>
+                    <option value="1">1 ребёнок</option>
+                    <option value="2">2 ребёнка</option>
+                </select>
+            </div>
+            <button id="btnSearch" type="submit">Проверить доступность</button>
         </div>
-
+        <div id="room-list"> </div>
+        <div class="row" id="booking-info">
+        </div>
     </div>
 </section>
 

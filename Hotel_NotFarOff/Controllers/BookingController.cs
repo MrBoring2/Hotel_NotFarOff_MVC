@@ -11,6 +11,8 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace Hotel_NotFarOff.Controllers
@@ -19,14 +21,24 @@ namespace Hotel_NotFarOff.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly HotelNotFarOffContext _db;
+
+
         public BookingController(ILogger<HomeController> logger, HotelNotFarOffContext context)
         {
             _logger = logger;
             _db = context;
         }
-        public IActionResult Index()
+
+        public IActionResult Index(BookingData bookingData)
         {
-            return View();
+            var a = HttpContext;
+            //var a = HttpContext;
+            //if (bookingData.CheckOut <= bookingData.CheckIn)
+            //{
+            //    ModelState.AddModelError("Error", "Неккоректно выбрана дата заезда или выезда! Минимальное проживание - 1 ночь.");
+            //    return View("../Home/Index");
+            //}
+            return View(new BookingViewModel(bookingData));
         }
 
         [HttpGet]

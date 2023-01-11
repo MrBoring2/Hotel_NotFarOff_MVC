@@ -1,25 +1,88 @@
 ﻿@using Hotel_NotFarOff.ViewModels
 @model BookingViewModel
+<div class="col-lg-8" id="booking-confirm">
 
-<div>
-    <div>
-        <p>заезд</p>
-        <h2>@Model.BookingData.CheckIn</h2>
+    <div class="booking-confirm-form">
+        <div id="booking-confirm-row-cell">
+            <p>заезд</p>
+            <h4>@Model.BookingData.CheckIn.ToLongDateString()</h4>
+        </div>
+
+        <div id="booking-confirm-row-cell2">
+            <p>взрослых: @Model.BookingData.AdultCount</p>
+            <p>детей: @Model.BookingData.ChildCount</p>
+            <p>@Model.DisplayNights</p>
+        </div>
+
+        <div id="booking-confirm-row-cell3">
+            <p>выезд</p>
+            <h4>@Model.BookingData.CheckOut.ToLongDateString()</h4>
+        </div>
     </div>
 
-    <div>
-        <p>взрослых: @Model.BookingData.AdultCount</p>
-        <p>детей: @Model.BookingData.ChildCount</p>
-        <p>@Model.NightCount ночей</p>
+    <hr />
+
+    <div id="booking-confirm-room">
+        <h5>@Model.RoomCategory.Title</h5>
+        <h4 style="right:0">@Model.TotalPrice.ToString("0.00") ₽</h4>
     </div>
 
-    <div>
-        <p>выезд</p>
-        <h2>@Model.BookingData.CheckOut</h2>
+    <hr />
+
+    <div id="booking-confirm-info">
+        <h6><b>Гарантия бронирования:</b></h6>
+        <p>
+            Для подтверждения бронирования необходимо произвести оплату @((Model.TotalPrice * 30 / 100).ToString("0.00")) ₽<br />
+            1) Для подтверждения бронирования при необходимо внести предоплату в размере 30 %<br />
+            от стоимости бронирования по номеру карты: Сбербанк 8356987345867631<br />
+            Получатель Олег Станиславович М.<br />
+            2) Необходима оплата депозита в день заезда в размере:<br />
+            - Двухуровневые апартаменты - 10000<br />
+            - Апартаменты-студия площадью 40 квм - 7000<br />
+            - Апартаменты-студия площадью 20 квм - 5000<br />
+            Депозит возвращается после выезда и проведения инвентаризации при условии<br />
+            не нанесенного ущерба имуществу. Сроки возврата депозита от 1 до 3х рабочих<br />
+            дней.
+        </p>
+
+        <h6><b>Отмена бронирования:</b></h6>
+        <p>
+            В случае отмены Заказа (Бронирования) менее, чем за 45 дней до даты заезда, а<br />
+            также в случае досрочного выезда из апартаментов, не заезда в апартаменты по <br />
+            забронированному заказу или аннулирования Заказа после наступившей даты <br />
+            заезда, денежные средства возврату не подлежат (п. 6.5 Договор-Оферта)
+        </p>
     </div>
 </div>
 
-<div>
-    <h2>@Model.RoomCategory.Title</h2>
-    <h2>@Model.TotalPrice</h2>
+<div class="col-lg-4">
+    <div id="booking-confirm">
+        <h4>Контактная информация</h4>
+        <br />
+
+        <div id="booking-contact-info">
+
+            <label for="tenantFullName">ФИО заказчика:</label>
+            <input asp-for="TenantFullName" id="tenantFullName" type="text">
+
+
+            <label for="tenantPhone">Телефон заказчика:</label>
+            <input asp-for="TenantPhone" id="tenantPhone" type="tel">
+
+
+            <label for="tenantEmail">Email заказчика:</label>
+            <input asp-for="TenantEmail" id="tenantEmail" type="email">
+
+            <p></p><hr />
+
+            @for (int i = 0; i < @Model.BookingData.AdultCount + @Model.BookingData.ChildCount; i++)
+            {
+                <label for="guest_@(i+1)">ФИО @(i+1) гостя:</label>
+                <input asp-for="Guests" id="guest_@(i+1)" type="text">
+            }
+        </div>
+
+        <button type="submit">Забронировать</button>
+
+    </div>
 </div>

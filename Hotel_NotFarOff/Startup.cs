@@ -5,9 +5,12 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.WebEncoders;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Encodings.Web;
+using System.Text.Unicode;
 using System.Threading.Tasks;
 
 namespace Hotel_NotFarOff
@@ -29,6 +32,10 @@ namespace Hotel_NotFarOff
             //{ 
             //    options.EnableForHttps = true;
             //});
+            services.Configure<WebEncoderOptions>(options =>
+            {
+                options.TextEncoderSettings = new TextEncoderSettings(UnicodeRanges.All);
+            });
             services.AddDbContext<HotelNotFarOffContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Connection")));
         }
 

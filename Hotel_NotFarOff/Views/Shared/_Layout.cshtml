@@ -3,6 +3,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Не за горами</title>
     <link href="https://fonts.googleapis.com/css?family=Lora:400,700&display=swap" rel="stylesheet">
@@ -139,7 +140,18 @@
     <script src="~/js/owl.carousel.min.js"></script>
     <script src="~/js/main.js"></script>
     <script type="text/javascript" src="~/js/datepicker_ru.js"></script>
-
+  @*  <script type="text/javascript">
+        //@if (!ViewData.ModelState.IsValid && ViewData.ModelState["Error"].Errors.Count > 0)
+        //{
+        //    <text>
+        //    $(document).ready(function() {
+        //        alert('@ViewData.ModelState["Error"].Errors.First().ErrorMessage.ToString()');
+        //    });
+        //    </text>
+        //}
+    </script>*@
     @await RenderSectionAsync("Booking", required: false)
+    @await RenderSectionAsync("DatePickers", required: false)
+
 </body>
 </html>

@@ -1,14 +1,26 @@
-﻿//const { data } = require("jquery");
-
-$(document).ready(function () {
+﻿$(document).ready(function () {
     $(function () {
-        GetStudents();
+
+        var dateIn = $("#date-in").val().replace(' 0:00:00', "").split('.')
+       
+        dateIn = new Date(dateIn[2], dateIn[1] - 1, dateIn[0])
+        var dateOut = $("#date-out").val().replace(' 0:00:00', "").split('.')
+        dateOut = new Date(dateOut[2], dateOut[1] - 1, dateOut[0])
+
+        $("#date-in").datepicker('setDate', new Date(dateIn))
+        $("#date-out").datepicker('setDate', new Date(dateOut))
+
+        $('#booking-info').hide()
+        var adultCount = $('#guest option:selected').val()
+        var childCount = $('#child option:selected').val()
+        GetRooms(parseInt(adultCount) + parseInt(childCount))
     });
+
 
     $('#btnSearch').on('click', function (e) {
         var adultCount = $('#guest option:selected').val()
         var childCount = $('#child option:selected').val()
-        GetStudents(parseInt(adultCount) + parseInt(childCount));
+        GetRooms(parseInt(adultCount) + parseInt(childCount));
     });
 
     $('#room-list').on('click', "#btnConfirm", function (e) {
@@ -22,7 +34,7 @@ $(document).ready(function () {
 
     })
 
-    function GetStudents(guestCount) {
+    function GetRooms(guestCount) {
         $.ajax({
             url: '/Booking/RoomList',
             type: 'GET',
@@ -34,7 +46,8 @@ $(document).ready(function () {
             }
         })
             .done(function (result) {
-                $("#booking-confirm").empty();
+                $("#booking-info").empty();
+                $('#booking-info').hide()
                 $("#room-list").html(result);
             }).fail(function (xhr) {
                 console.log('error : ' + xhr.status + ' - ' + xhr.statusText + ' - ' + xhr.responseText);
@@ -62,7 +75,8 @@ $(document).ready(function () {
         })
             .done(function (result) {
                 $('#room-list').empty();
-                $("#booking-confirm").html(result);
+                $('#booking-info').show()
+                $("#booking-info").html(result);
             }).fail(function (xhr) {
                 console.log('error : ' + xhr.status + ' - ' + xhr.statusText + ' - ' + xhr.responseText);
             });
