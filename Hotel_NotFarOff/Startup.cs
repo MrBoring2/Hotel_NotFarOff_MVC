@@ -1,6 +1,9 @@
 using Hotel_NotFarOff.Contexts;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -27,16 +30,31 @@ namespace Hotel_NotFarOff
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllersWithViews().AddNewtonsoftJson();
-            //services.AddResponseCompression(options =>
-            //{ 
-            //    options.EnableForHttps = true;
-            //});
+            services.AddControllersWithViews().AddNewtonsoftJson(options =>
+            {
+                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+            });
+            services.AddResponseCompression(options =>
+            {
+                options.EnableForHttps = true;
+            });
             services.Configure<WebEncoderOptions>(options =>
             {
                 options.TextEncoderSettings = new TextEncoderSettings(UnicodeRanges.All);
             });
             services.AddDbContext<HotelNotFarOffContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Connection")));
+
+            //services.AddIdentity<IdentityUser, IdentityRole>();
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                 .AddCookie(options =>
+                 {
+                     options.LoginPath = new Microsoft.AspNetCore.Http.PathString("/Account/Login");
+                 });
+
+
+            //регистрируем хранилище
+            //services.AddIdentity<IdentityUser, IdentityRole>()
+            //        .AddEntityFrameworkStores<IdentityDbContext>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -55,6 +73,7 @@ namespace Hotel_NotFarOff
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

@@ -23,24 +23,154 @@ namespace Hotel_NotFarOff.Controllers
             _logger = logger;
             _db = context;
         }
-        public async Task<IActionResult> List()
+
+
+        [HttpPost]
+        public async Task<IActionResult> ForAdminList()
         {
-            return View(await _db.RoomCategories.Select(p => new RoomInListViewModel(p.Id, p.Title, p.PricePerDay, p.RoomCount, p.NumbeOfSeats, p.RoomSize, p.ShortDescription, p.MainImage, p.Rooms.Count(p => p.IsBooked == false))).AsNoTracking().AsQueryable().ToListAsync());
+            var rooms = await _db.Rooms.AsQueryable().ToListAsync();
+            return PartialView("_List", rooms);
         }
-        public async Task<IActionResult> Details(int roomCategoryId)
+        [HttpPost]
+        public async Task<ActionResult<ICollection<Room>>> GetList()
         {
-            var room = await _db.RoomCategories.FirstOrDefaultAsync(p => p.Id == roomCategoryId);
-            return View(new RoomCategoryViewModel(room));
+            var rooms = await _db.Rooms.AsQueryable().ToListAsync();
+            return rooms;
         }
 
-        public FileResult GetFileFromBytes(int id)
+        // GET: RoomCategories/Details/5
+        public async Task<IActionResult> Details(int? id)
         {
-            return File(_db.RoomCategories.FirstOrDefault(p => p.Id == id).MainImage, "image/png");
+            if (id == null || _db.Rooms == null)
+            {
+                return NotFound();
+            }
+
+            var room = await _db.Rooms
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (room == null)
+            {
+                return NotFound();
+            }
+
+            return View(room);
         }
-        public FileResult GetRoomImage(int id, int imageNumber)
+
+        // GET: RoomCategories/Create
+        public IActionResult Create()
         {
-            return File(_db.RoomImages.Where(p => p.RoomCategoryId == id).Skip(imageNumber - 1).FirstOrDefault().Image, "image/png");
+            return View();
         }
+
+        // POST: RoomCategories/Create
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create([Bind("Id,Title,PricePerDay,RoomCount,NumbeOfSeats,RoomSize,ShortDescription,Description,Services,MainImage")] RoomCategory roomCategory)
+        {
+            if (ModelState.IsValid)
+            {
+                _db.Add(roomCategory);
+                await _db.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            return View(roomCategory);
+        }
+
+        // GET: RoomCategories/Edit/5
+        public async Task<IActionResult> Edit(int? id)
+        {
+            if (id == null || _db.RoomCategories == null)
+            {
+                return NotFound();
+            }
+
+            var roomCategory = await _db.RoomCategories.FindAsync(id);
+            if (roomCategory == null)
+            {
+                return NotFound();
+            }
+            return View(roomCategory);
+        }
+
+        // POST: RoomCategories/Edit/5
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,PricePerDay,RoomCount,NumbeOfSeats,RoomSize,ShortDescription,Description,Services,MainImage")] RoomCategory roomCategory)
+        {
+            if (id != roomCategory.Id)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _db.Update(roomCategory);
+                    await _db.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!RoomCategoryExists(roomCategory.Id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(Index));
+            }
+            return View(roomCategory);
+        }
+
+        // GET: RoomCategories/Delete/5
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (id == null || _db.RoomCategories == null)
+            {
+                return NotFound();
+            }
+
+            var roomCategory = await _db.RoomCategories
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (roomCategory == null)
+            {
+                return NotFound();
+            }
+
+            return View(roomCategory);
+        }
+
+        // POST: RoomCategories/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            if (_db.RoomCategories == null)
+            {
+                return Problem("Entity set 'HotelNotFarOffContext.RoomCategories'  is null.");
+            }
+            var roomCategory = await _db.RoomCategories.FindAsync(id);
+            if (roomCategory != null)
+            {
+                _db.RoomCategories.Remove(roomCategory);
+            }
+
+            await _db.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+
+        private bool RoomCategoryExists(int id)
+        {
+            return _db.RoomCategories.Any(e => e.Id == id);
+        }
+
 
     }
 }

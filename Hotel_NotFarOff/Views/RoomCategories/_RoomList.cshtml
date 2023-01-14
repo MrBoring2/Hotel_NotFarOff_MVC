@@ -1,0 +1,19 @@
+﻿@using Hotel_NotFarOff.Models
+@model IEnumerable<RoomInList>
+
+@foreach (var item in Model)
+{
+    <div class="mini-room-detail">
+        <input id="roomCategoryId" type="hidden" value="@item.Id" />
+        <a href="@Url.Action("Details", "RoomCategories", new {id = @item.Id})"><img id="main-image" src="@Url.Action("GetFileFromBytes", "RoomCategories", new { id = @item.Id})" alt="Подробнее" /></a>
+        <h4 align="left">@item.Title</h4>
+        <div>
+            <input id="maxGuests" type="hidden" value="@item.NumbeOfSeats" />
+            <p>вместительность @item.NumbeOfSeats чел.</p>
+            <p>@item.RoomSize кв. м.</p>
+            <p>номеров осталось: @item.RoomsLeft</p>
+        </div>
+        <h4>@item.PricePerDay.ToString("0.00") ₽<span>/За ночь</span></h4>
+        <button id="btnConfirm">Выбрать</button>
+    </div>
+}

@@ -349,6 +349,18 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     }
 }
 
+.main-image-small {
+    display: block;
+    width: 5%;
+    max-width:20%;
+}
+.table-column-flex {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+}
+
+
 .spacial-controls {
     position: fixed;
     width: 111px;

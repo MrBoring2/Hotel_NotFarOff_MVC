@@ -1,0 +1,84 @@
+﻿@using Hotel_NotFarOff.Enums
+@using Hotel_NotFarOff.TagHelpersExtentions
+<aside class="main-sidebar sidebar-dark-primary elevation-4">
+    <a href="~/Admin" class="brand-link">
+        <img src="~/img/footer_logo.png" alt="Логотип" class="brand-image elevation-3"
+             style="opacity: .8">
+        <span class="brand-text font-weight-light">Админка</span>
+    </a>
+    <div class="sidebar">
+        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+            <div class="image">
+                <img src="~/img/avatar5.png" class="img-circle elevation-2" alt="User Image">
+            </div>
+            <div class="info">
+                <a href="#" class="d-block">@Html.GetInitials(User.Claims.FirstOrDefault(p => p.Type == "FullName").Value)</a>
+            </div>
+        </div>
+        <nav class="mt-2">
+            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                <li class="nav-item ">
+                    <a asp-controller="Admin" asp-action="Index" class="nav-link @Html.IsActive("Admin", "Index")">
+                        <i class="nav-icon fas fa-home"></i>
+                        <p>
+                            Главная
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item ">
+                    <a asp-controller="Admin" asp-action="RoomCategoriesList" class="nav-link @Html.IsActive("Admin", "RoomCategoriesList")">
+                        <i class="nav-icon fas fa-list"></i>
+                        <p>
+                            Категории номеров
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item ">
+                    <a asp-controller="Admin" asp-action="RoomsList" class="nav-link @Html.IsActive("Admin", "RoomsList")">
+                        <i class="nav-icon fas fa-bed"></i>
+                        <p>
+                            Номера
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item ">
+                    <a asp-controller="Admin" asp-action="BookingList" class="nav-link @Html.IsActive("Admin", "BookingList")">
+                        <i class="nav-icon fas fa-hotel"></i>
+                        <p>
+                            Бронирования
+                        </p>
+                    </a>
+                </li>
+                @if (User.Claims.FirstOrDefault(p => p.Type == "PostId").Value == ((int)Posts.Admin).ToString())
+                {
+
+
+                    <li class="nav-item ">
+                        <a asp-controller="Admin" asp-action="EmployeesList" class="nav-link @Html.IsActive("Admin", "EmployeesList")">
+                            <i class="nav-icon fas fa-users"></i>
+                            <p>
+                                Сотрудники
+                            </p>
+                        </a>
+                    </li>
+                }
+                <li class="nav-item ">
+                    <a asp-controller="Admin" asp-action="Privacy" class="nav-link @Html.IsActive("Admin", "Privacy")">
+                        <i class="nav-icon fas fa-lock"></i>
+                        <p>
+                            Политика конфиденциальности
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item ">
+                    <a asp-controller="Account" asp-action="LogOut" class="nav-link @Html.IsActive("Account", "LogOut")">
+                        <i class="nav-icon fas fa-sign-out-alt"></i>
+                        <p>
+                            Выход
+                        </p>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</aside>

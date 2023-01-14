@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace Hotel_NotFarOff.TagHelpersExtentions
 {
-    public static class MenuTagHelper 
+    public static class MenuTagHelper
     {
         public static string IsActive(this IHtmlHelper htmlHelper, string controller, string action)
         {

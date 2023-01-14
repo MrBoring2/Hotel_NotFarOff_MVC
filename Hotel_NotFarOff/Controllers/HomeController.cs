@@ -27,18 +27,11 @@ namespace Hotel_NotFarOff.Controllers
         {
             return View();
         }
-        //public IActionResult Privacy()
-        //{
-        //    return View();
-        //}
-        //public IActionResult AboutUs()
-        //{
-        //    return RedirectToAction("Index", "AboutUs");
-        //}
-        //public IActionResult Rooms()
-        //{
-        //    return RedirectToAction("Index", "Rooms");
-        //}
+        public IActionResult Privacy()
+        {
+            return View();
+        }
+
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

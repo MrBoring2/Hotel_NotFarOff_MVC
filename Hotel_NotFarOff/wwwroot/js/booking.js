@@ -33,6 +33,7 @@ $(document).ready(function () {
         $("#date-out").datepicker('setDate', dateOut)
         $('#room-list').empty();
         $("#booking-info").empty();
+        $('#searchForm').submit();
     });
 
     $('#room-list').on('click', "#btnConfirm", function (e) {

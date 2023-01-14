@@ -1,3 +1,17 @@
-﻿@{
-    Layout = "_Layout";
+﻿@using Microsoft.AspNetCore.Http
+
+@{
+    var controller = this.ViewContext.RouteData.Values["controller"].ToString();
+
+    string layout = "";
+    if (controller == "Admin")
+    {
+        layout = "~/Views/Shared/AdminLTE/_AdminLayout.cshtml";
+    }
+    else
+    {
+        layout = "~/Views/Shared/_Layout.cshtml";
+    }
+
+    Layout = layout;
 }

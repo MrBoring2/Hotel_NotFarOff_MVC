@@ -26,7 +26,7 @@ namespace Hotel_NotFarOff.Contexts
         public virtual DbSet<Post> Posts { get; set; }
         public virtual DbSet<Room> Rooms { get; set; }
         public virtual DbSet<RoomCategory> RoomCategories { get; set; }
-        public virtual DbSet<SiteProfle> SiteProfles { get; set; }
+        public virtual DbSet<Account> SiteProfles { get; set; }
         public virtual DbSet<PaymentMethod> PaymentMethods { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -236,12 +236,12 @@ namespace Hotel_NotFarOff.Contexts
                     .HasColumnType("image");
             });
 
-            modelBuilder.Entity<SiteProfle>(entity =>
+            modelBuilder.Entity<Account>(entity =>
             {
                 entity.HasKey(e => e.EmployeeId)
                     .HasName("PK_AdministratorProfle");
 
-                entity.ToTable("SiteProfle");
+                entity.ToTable("Account");
 
                 entity.Property(e => e.EmployeeId).ValueGeneratedNever();
 
@@ -256,8 +256,8 @@ namespace Hotel_NotFarOff.Contexts
                     .IsUnicode(false);
 
                 entity.HasOne(d => d.Employee)
-                    .WithOne(p => p.SiteProfle)
-                    .HasForeignKey<SiteProfle>(d => d.EmployeeId)
+                    .WithOne(p => p.Account)
+                    .HasForeignKey<Account>(d => d.EmployeeId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_SiteProfle_Employee");
             });

@@ -3,6 +3,7 @@ using Hotel_NotFarOff.Enums;
 using Hotel_NotFarOff.Models;
 using Hotel_NotFarOff.Models.Entities;
 using Hotel_NotFarOff.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
@@ -18,6 +19,7 @@ using System.Threading.Tasks;
 
 namespace Hotel_NotFarOff.Controllers
 {
+    [Authorize]
     public class BookingController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -29,7 +31,7 @@ namespace Hotel_NotFarOff.Controllers
             _logger = logger;
             _db = context;
         }
-
+        [AllowAnonymous]
         public async Task<IActionResult> IndexAsync(BookingData bookingData)
         {
             if (ModelState.IsValid)
@@ -47,42 +49,17 @@ namespace Hotel_NotFarOff.Controllers
                 //}
             }
         }
-
         [HttpPost]
-        public async Task<IActionResult> RoomList(BookingViewModel res)
+        public async Task<IActionResult> ForAdminList()
         {
-            var a = HttpContext;
-            List<RoomCategory> rooms;
-            int roomCategoryId = res.BookingData.RoomCategoryId;
-            int guestCount = res.BookingData.AdultCount + res.BookingData.ChildCount;
-            if (roomCategoryId == 0)
-            {
-                if (guestCount > 0)
-                {
-                    rooms = await _db.RoomCategories.Where(p => p.Rooms.Any(p => p.IsBooked == false)).Where(p => p.NumbeOfSeats >= guestCount).AsQueryable().ToListAsync();
-                }
-                else
-                {
-                    rooms = await _db.RoomCategories.Where(p => p.Rooms.Any(p => p.IsBooked == false)).AsQueryable().ToListAsync();
-                }
-            }
-            else
-            {
-                rooms = await _db.RoomCategories.Where(p => p.Id == roomCategoryId).Where(p => p.Rooms.Any(p => p.IsBooked == false)).Where(p => p.NumbeOfSeats >= guestCount).AsQueryable().ToListAsync();
-            }
-
-            if (rooms.Count > 0)
-            {
-                var roomViewModel = rooms.Select(p => new RoomInListViewModel(p.Id, p.Title, p.PricePerDay, p.RoomCount, p.NumbeOfSeats, p.RoomSize, p.ShortDescription, p.MainImage, p.Rooms.Count(p => p.IsBooked == false))).ToList();
-                return PartialView("_RoomList", roomViewModel);
-            }
-            else
-            {
-                return Content("<h2 style='text - align: center'>Номера с такими параметрами поиска не найдены или все комнаты данной категории заняты.</h2>");
-            }
+            var bookings = await _db.Bookings.AsQueryable().ToListAsync();
+            return PartialView("_List", bookings);
         }
+        [AllowAnonymous]
+        public IActionResult Create() => View();
 
         [HttpPost]
+        [AllowAnonymous]
         public async Task<IActionResult> Confirm([FromBody] JObject checkIn)
         {
             var bookingData = JsonConvert.DeserializeObject<BookingData>(checkIn.ToString());
@@ -93,10 +70,8 @@ namespace Hotel_NotFarOff.Controllers
 
         }
 
-        public IActionResult Create() => View();
-
-
         [HttpPost]
+        [AllowAnonymous]
         public async Task<IActionResult> Create(BookingViewModel bookingViewModel)
         {
             if (ModelState.IsValid)

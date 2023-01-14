@@ -11,6 +11,7 @@ namespace Hotel_NotFarOff.ViewModels
         public RoomCategoryViewModel(RoomCategory roomCategory)
         {
             RoomCategory = roomCategory;
+            RoomCategoryId = RoomCategory.Id;
         }
         public string PricePerDayString => RoomCategory.PricePerDay.ToString("0.00") + " ₽";
         public string Message { get; set; }

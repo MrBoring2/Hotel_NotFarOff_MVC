@@ -19,7 +19,7 @@ namespace Hotel_NotFarOff.Models.Entities
         public string Gender { get; set; }
 
         public virtual Post Post { get; set; }
-        public virtual SiteProfle SiteProfle { get; set; }
+        public virtual Account Account { get; set; }
         public virtual ICollection<Room> Rooms { get; set; }
     }
 }
