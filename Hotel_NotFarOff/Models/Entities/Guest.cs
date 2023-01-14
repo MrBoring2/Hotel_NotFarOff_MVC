@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Hotel_NotFarOff.Models.Entities
 {
@@ -11,6 +12,7 @@ namespace Hotel_NotFarOff.Models.Entities
         }
 
         public int Id { get; set; }
+        [Required]
         public string FullName { get; set; }
 
         public virtual ICollection<Booking> Bookings { get; set; }

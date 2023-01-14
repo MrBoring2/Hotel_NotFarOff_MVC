@@ -1,26 +1,38 @@
-﻿$(document).ready(function () {
+﻿
+$(document).ready(function () {
+
+    completed = function (message) {
+        alert(message.responseText)
+        window.location.href = 'Home/Index';
+    }
+
     $(function () {
 
+        $('#searchForm').submit();
         var dateIn = $("#date-in").val().replace(' 0:00:00', "").split('.')
-       
+
         dateIn = new Date(dateIn[2], dateIn[1] - 1, dateIn[0])
         var dateOut = $("#date-out").val().replace(' 0:00:00', "").split('.')
         dateOut = new Date(dateOut[2], dateOut[1] - 1, dateOut[0])
 
         $("#date-in").datepicker('setDate', new Date(dateIn))
         $("#date-out").datepicker('setDate', new Date(dateOut))
-
-        $('#booking-info').hide()
-        var adultCount = $('#guest option:selected').val()
-        var childCount = $('#child option:selected').val()
-        GetRooms(parseInt(adultCount) + parseInt(childCount))
     });
 
 
     $('#btnSearch').on('click', function (e) {
-        var adultCount = $('#guest option:selected').val()
-        var childCount = $('#child option:selected').val()
-        GetRooms(parseInt(adultCount) + parseInt(childCount));
+        $('#room-list').empty();
+        $("#booking-info").empty();
+    });
+    $('#btnRemoveFilter').on('click', function (e) {
+        $("#roomCategoryId").val(0);
+        var dateIn = new Date()
+        $("#date-in").datepicker('setDate', dateIn)
+        var dateOut = new Date(dateIn)
+        dateOut.setDate(dateIn.getDate() + 1)
+        $("#date-out").datepicker('setDate', dateOut)
+        $('#room-list').empty();
+        $("#booking-info").empty();
     });
 
     $('#room-list').on('click', "#btnConfirm", function (e) {
@@ -30,11 +42,21 @@
         var checkIn = $("#date-in").datepicker('getDate')
         var checkOut = $("#date-out").datepicker('getDate')
         var roomCategoryId = $(this).parent().find('#roomCategoryId').val()
-        Confirm(checkIn, checkOut, adultCount, childCount, roomCategoryId)
+
+        var maxGuests = $(this).parent().find('#maxGuests').val()
+
+        if (checkOut <= checkIn)
+            alert("Дата выезда болжна быть больше даты заезда")
+        else if (parseInt(adultCount) + parseInt(childCount) > parseInt(maxGuests))
+            alert("Выбрано " + (parseInt(adultCount) + parseInt(childCount)) + " чел. Вместимость этого номера максимум " + maxGuests + " чел.")
+        else
+            Confirm(checkIn, checkOut, adultCount, childCount, roomCategoryId)
+
+
 
     })
 
-    function GetRooms(guestCount) {
+    function GetRooms(guestCount, roomCategoryId) {
         $.ajax({
             url: '/Booking/RoomList',
             type: 'GET',
@@ -42,7 +64,8 @@
             async: true,
             dataType: "html",
             data: {
-                guestCount: guestCount
+                guestCount: guestCount,
+                roomCategoryId: roomCategoryId
             }
         })
             .done(function (result) {
@@ -91,5 +114,3 @@
     });
     $(".mini-room-detail").height(mh);
 });
-
-

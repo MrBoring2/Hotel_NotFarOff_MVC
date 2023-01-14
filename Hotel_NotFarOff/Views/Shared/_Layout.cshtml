@@ -59,7 +59,7 @@
                     <div class="col-lg-2">
                         <div class="logo">
                             <a href="@Url.Action("Index", "Home")">
-                                <img src="@Url.Content("~/img/logo1.png")" width="300" height="45">
+                                <img src="@Url.Content("~/img/logo1.png")" width="150" height="50">
                             </a>
                         </div>
                     </div>
@@ -106,7 +106,15 @@
                             </div>
                         </div>
                     </div>
-
+                    <div class="col-lg-3 offset-lg-1">
+                        <div class="ft-contact">
+                            <h6>Связаться с нами</h6>
+                            <ul>
+                                <li>+7 576 534 6578</li>
+                                <li>someemail@gmail.com</li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -131,25 +139,19 @@
             </div>
         </div>
     </footer>
-    <script src="~/js/jquery-3.3.1.min.js"></script>
+    <script src="~/lib/jquery/dist/jquery.js"></script>
     <script src="~/js/bootstrap.min.js"></script>
     <script src="~/js/jquery.magnific-popup.min.js"></script>
     <script src="~/js/jquery.nice-select.min.js"></script>
     <script src="~/js/jquery-ui.min.js"></script>
     <script src="~/js/jquery.slicknav.js"></script>
     <script src="~/js/owl.carousel.min.js"></script>
-    <script src="~/js/main.js"></script>
-    <script type="text/javascript" src="~/js/datepicker_ru.js"></script>
-  @*  <script type="text/javascript">
-        //@if (!ViewData.ModelState.IsValid && ViewData.ModelState["Error"].Errors.Count > 0)
-        //{
-        //    <text>
-        //    $(document).ready(function() {
-        //        alert('@ViewData.ModelState["Error"].Errors.First().ErrorMessage.ToString()');
-        //    });
-        //    </text>
-        //}
-    </script>*@
+    <script src="~/js/main.js"></script> 
+    <script src="~/lib/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.js"></script>
+
+
+    @*  <script type="text/javascript" src="~/js/datepicker_ru.js"></script>*@
+   
     @await RenderSectionAsync("Booking", required: false)
     @await RenderSectionAsync("DatePickers", required: false)
 

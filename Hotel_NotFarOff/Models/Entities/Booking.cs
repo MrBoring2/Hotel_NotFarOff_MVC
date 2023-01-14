@@ -18,10 +18,10 @@ namespace Hotel_NotFarOff.Models.Entities
         public DateTime CheckOut { get; set; }
         public int RoomId { get; set; }
         public int BookingStatusId { get; set; }
-
+        public int PaymentMethodId { get; set; }
         public virtual BookingStatus BookingStatus { get; set; }
         public virtual Room Room { get; set; }
-
+        public virtual PaymentMethod PaymentMethod { get; set; }
         public virtual ICollection<Guest> Guests { get; set; }
     }
 }

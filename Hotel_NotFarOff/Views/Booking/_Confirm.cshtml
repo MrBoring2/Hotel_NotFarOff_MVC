@@ -1,11 +1,12 @@
-﻿@using Hotel_NotFarOff.ViewModels
+﻿@using Hotel_NotFarOff.Models.Entities
+@using Hotel_NotFarOff.ViewModels
 @model BookingViewModel
 <div class="col-lg-8" id="booking-confirm">
-
     <div class="booking-confirm-form">
         <div id="booking-confirm-row-cell">
             <p>заезд</p>
             <h4>@Model.BookingData.CheckIn.ToLongDateString()</h4>
+            <h4>14:00</h4>
         </div>
 
         <div id="booking-confirm-row-cell2">
@@ -17,6 +18,7 @@
         <div id="booking-confirm-row-cell3">
             <p>выезд</p>
             <h4>@Model.BookingData.CheckOut.ToLongDateString()</h4>
+            <h4>12:00</h4>
         </div>
     </div>
 
@@ -61,28 +63,54 @@
         <br />
 
         <div id="booking-contact-info">
+            <form method="post" data-ajax="true" data-ajax-method="post" data-ajax-complete="completed" data-ajax-url="/Booking/Create">
+                <div>
+                    <label asp-for="TenantFullName">*ФИО заказчика:</label>
+                    <input type="text" name="TenantFullName" asp-for="TenantFullName">
+                    <span class="text-danger field-validation-valid" asp-validation-for="TenantFullName" />
 
-            <label for="tenantFullName">ФИО заказчика:</label>
-            <input asp-for="TenantFullName" id="tenantFullName" type="text">
+                </div>
+                <div>
+                    <label asp-for="TenantPhone">*Телефон заказчика:</label>
+                    <input name="TenantPhone" type="tel" asp-for="TenantPhone">
+                    <span class="text-danger field-validation-valid" asp-validation-for="TenantPhone" />
+                </div>
+                <div>
+                    <label asp-for="TenantEmail">*Email заказчика:</label>
+                    <input name="TenantEmail" type="text" asp-for="TenantEmail">
+                    <span class="text-danger field-validation-valid" asp-validation-for="TenantEmail" />
+                    <hr />
+                </div>
 
+                @for (int i = 0; i < @Model.BookingData.AdultCount + @Model.BookingData.ChildCount; i++)
+                {
+                    <div>
+                        <label for="guest_@(i+1)">*ФИО @(i+1) гостя:</label>
+                        <input asp-for="Guests[i].FullName" id="guest_@(i+1)" type="text">
+                        <span class="text-danger field-validation-valid" asp-validation-for="Guests[i].FullName" />
+                    </div>
+                }
 
-            <label for="tenantPhone">Телефон заказчика:</label>
-            <input asp-for="TenantPhone" id="tenantPhone" type="tel">
-
-
-            <label for="tenantEmail">Email заказчика:</label>
-            <input asp-for="TenantEmail" id="tenantEmail" type="email">
-
-            <p></p><hr />
-
-            @for (int i = 0; i < @Model.BookingData.AdultCount + @Model.BookingData.ChildCount; i++)
-            {
-                <label for="guest_@(i+1)">ФИО @(i+1) гостя:</label>
-                <input asp-for="Guests" id="guest_@(i+1)" type="text">
-            }
+                <hr />
+                <div class="select-option">
+                    <label asp-for="SelectedPaymentMethodId">Способ оплаты:  </label>
+                    <select id="guest" asp-for="SelectedPaymentMethodId" asp-items="@(new SelectList(Model.PaymentMethods, nameof(PaymentMethod.Id), nameof(PaymentMethod.Title)))">
+                    </select>
+                </div>
+                <input type="hidden" asp-for="BookingData.AdultCount" />
+                <input type="hidden" asp-for="BookingData.CheckIn" />
+                <input type="hidden" asp-for="BookingData.CheckOut" />
+                <input type="hidden" asp-for="BookingData.RoomCategoryId" />
+                <input type="hidden" asp-for="BookingData.ChildCount" />
+                <button type="submit" onclick="CreatedBooking()">Забронировать</button>
+            </form>
         </div>
 
-        <button type="submit">Забронировать</button>
+
 
     </div>
 </div>
+
+<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+@*<script src="~/js/booking.js"></script>*@
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>

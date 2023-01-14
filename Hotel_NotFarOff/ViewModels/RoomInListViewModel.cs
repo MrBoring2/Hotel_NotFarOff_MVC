@@ -3,7 +3,7 @@
     public class RoomInListViewModel
     {
 
-        public RoomInListViewModel(int id, string title, decimal pricePerDay, int roomCount, int numbeOfSeats, double roomSize, string shortDescription, byte[] mainImage)
+        public RoomInListViewModel(int id, string title, decimal pricePerDay, int roomCount, int numbeOfSeats, double roomSize, string shortDescription, byte[] mainImage, int roomsLast)
         {
             Id = id;
             Title = title;
@@ -13,6 +13,7 @@
             RoomSize = roomSize;
             ShortDescription = shortDescription;
             MainImage = mainImage;
+            RoomsLeft = roomsLast;
         }
         public int Id { get; set; }
         public string Title { get; set; }
@@ -21,6 +22,7 @@
         public int NumbeOfSeats { get; set; }
         public double RoomSize { get; set; }
         public string ShortDescription { get; set; }
+        public int RoomsLeft { get; set; }
         public byte[] MainImage { get; set; }
     }
 }

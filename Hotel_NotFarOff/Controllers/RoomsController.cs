@@ -25,7 +25,7 @@ namespace Hotel_NotFarOff.Controllers
         }
         public async Task<IActionResult> List()
         {
-            return View(await _db.RoomCategories.Select(p => new RoomInListViewModel(p.Id, p.Title, p.PricePerDay, p.RoomCount, p.NumbeOfSeats, p.RoomSize, p.ShortDescription, p.MainImage)).AsQueryable().ToListAsync());
+            return View(await _db.RoomCategories.Select(p => new RoomInListViewModel(p.Id, p.Title, p.PricePerDay, p.RoomCount, p.NumbeOfSeats, p.RoomSize, p.ShortDescription, p.MainImage, p.Rooms.Count(p => p.IsBooked == false))).AsNoTracking().AsQueryable().ToListAsync());
         }
         public async Task<IActionResult> Details(int roomCategoryId)
         {

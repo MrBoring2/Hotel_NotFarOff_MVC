@@ -27,6 +27,7 @@ namespace Hotel_NotFarOff.Contexts
         public virtual DbSet<Room> Rooms { get; set; }
         public virtual DbSet<RoomCategory> RoomCategories { get; set; }
         public virtual DbSet<SiteProfle> SiteProfles { get; set; }
+        public virtual DbSet<PaymentMethod> PaymentMethods { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -75,6 +76,12 @@ namespace Hotel_NotFarOff.Contexts
                     .HasForeignKey(d => d.RoomId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Booking_Room");
+
+                entity.HasOne(d => d.PaymentMethod)
+                    .WithMany(p => p.Bookings)
+                    .HasForeignKey(d => d.PaymentMethodId)
+                    .OnDelete(DeleteBehavior.NoAction)
+                    .HasConstraintName("FK_Booking_PaymentMethod");
             });
 
             modelBuilder.Entity<BookingStatus>(entity =>
@@ -86,7 +93,14 @@ namespace Hotel_NotFarOff.Contexts
                     .HasMaxLength(100)
                     .IsUnicode(false);
             });
-
+            modelBuilder.Entity<PaymentMethod>(entity =>
+            {
+                entity.ToTable("PaymentMethod");
+                entity.Property(e => e.Title)
+                      .IsRequired()
+                      .HasMaxLength(50)
+                      .IsUnicode(false);
+            });
             modelBuilder.Entity<Employee>(entity =>
             {
                 entity.ToTable("Employee");

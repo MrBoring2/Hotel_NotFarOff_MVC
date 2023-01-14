@@ -7,7 +7,7 @@
         <div class="row">
             <div class="col-lg-6">
                 <div class="hero-text">
-                    <h1>Не за горами - Роскошный отель</h1>
+                    <h1>Не за горами - Роскошная гостинница</h1>
                     <p>
                         Здесь лучшие комнаты для бронирования.
                     </p>
@@ -19,15 +19,18 @@
                     @model BookingData
                     <h3>Бронирование комнаты</h3>
                     <form asp-action="Index" asp-controller="Booking">
+                        <div class="text-danger field-validation-valid" asp-validation-summary="ModelOnly"></div>
                         <div class="check-date">
                             <label asp-for="CheckIn">Заезд:</label>
                             <input type="text" readonly="readonly" asp-for="CheckIn" class="date-input" id="date-in">
                             <i class="icon_calendar"></i>
+                            <span class="text-danger field-validation-valid" />
                         </div>
                         <div class="check-date">
                             <label asp-for="CheckOut">Выезд:</label>
-                            <input type="text"  readonly="readonly" asp-for="CheckOut" class="date-input" id="date-out">
+                            <input type="text" readonly="readonly" asp-for="CheckOut" class="date-input" id="date-out">
                             <i class="icon_calendar"></i>
+                            <span class="text-danger field-validation-valid" asp-validation-for="CheckIn" />
                         </div>
 
                         <div class="select-option">
@@ -64,4 +67,6 @@
 @section DatePickers
     {
     <script src="@Url.Content("~/js/datepickerInit.js")"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
 }

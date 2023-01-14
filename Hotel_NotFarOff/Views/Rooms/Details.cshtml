@@ -59,41 +59,19 @@
                 </div>
             </div>
             <div class="col-lg-4">
-                <div class="room-booking">
-                    <h3>Бронирование</h3>
-                    <form action="#">
-                        <div class="check-date">
-                            <label for="date-in">Заезд:</label>
-                            <input type="text" class="date-input" id="date-in">
-                            <i class="icon_calendar"></i>
-                        </div>
-                        <div class="check-date">
-                            <label for="date-out">Выезд:</label>
-                            <input type="text" class="date-input" id="date-out">
-                            <i class="icon_calendar"></i>
-                        </div>
-
-                        <div class="select-option">
-                            <label for="guest">Guests:</label>
-                            <select id="guest">
-                                <option value="">2 Взрослых</option>
-                                <option value="">3 Взрослых</option>
-                            </select>
-                        </div>
-                        <div class="select-option">
-                            <label for="room">Room:</label>
-                            <select id="room">
-                                <option value="">1 Комната</option>
-                                <option value="">2 Команты</option>
-                            </select>
-                        </div>
-                        <button type="submit">Check Availability</button>
-                    </form>
-                </div>
+                @{
+                    await Html.RenderPartialAsync("_BookingForm", new BookingData(DateTime.Today, DateTime.Today.AddDays(1), 1, 0, Model.RoomCategoryId));
+                }
             </div>
-
-
         </div>
-        <a href="javascript:history.go(-1)" class="primary-btn">Назад к списку номеров</a>
+        <div>
+            <a href="javascript:history.go(-1)" class="primary-btn">Назад к списку номеров</a>
+        </div>
     </div>
+
 </section>
+
+@section DatePickers
+    {
+    <script src="@Url.Content("~/js/datepickerInit.js")"></script>
+}

@@ -1,0 +1,36 @@
+﻿@model BookingData
+<div class="booking-form">
+    <h3>Бронирование комнаты</h3>
+    <form asp-action="Index" asp-controller="Booking">
+        <div class="check-date">
+            <label asp-for="CheckIn">Заезд:</label>
+            <input type="text" readonly="readonly" asp-for="CheckIn" class="date-input" id="date-in">
+            <i class="icon_calendar"></i>
+        </div>
+        <div class="check-date">
+            <label asp-for="CheckOut">Выезд:</label>
+            <input type="text" readonly="readonly" asp-for="CheckOut" class="date-input" id="date-out">
+            <i class="icon_calendar"></i>
+        </div>
+
+        <div class="select-option">
+            <label for="guest">Гости:  </label>
+            <select asp-for="AdultCount" id="guest">
+                <option value="1">1 Взрослый</option>
+                <option value="2">2 Взрослых</option>
+                <option value="3">3 Взрослых</option>
+                <option value="4">4 Взрослых</option>
+            </select>
+        </div>
+        <div class="select-option">
+            <label for="child">Дети:  </label>
+            <select asp-for="ChildCount" id="child">
+                <option value="0">Без детей</option>
+                <option value="1">1 ребёнок</option>
+                <option value="2">2 ребёнка</option>
+            </select>
+        </div>
+        <input type="hidden" asp-for="RoomCategoryId" />
+        <button type="submit">Проверить доступность</button>
+    </form>
+</div>

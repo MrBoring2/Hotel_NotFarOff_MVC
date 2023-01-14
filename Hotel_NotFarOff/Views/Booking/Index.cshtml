@@ -17,42 +17,54 @@
 </div>
 
 <section class="rooms-section spad">
+
     <div class="container">
-        <div class="booking-form-row">
-            <div>
-                <div class="check-date">
-                    <label asp-for="BookingData.CheckIn">Заезд:</label>
-                    <input type="text" value="@Model.BookingData.CheckIn" readonly="readonly" asp-for="BookingData.CheckIn" class="date-input" id="date-in">
-                    <i class="icon_calendar"></i>
+        <form id="searchForm" method="post" data-ajax="true" data-ajax-method="post" data-ajax-url="/Booking/RoomList" data-ajax-update="#room-list" data-ajax-loading="#spinner">
+            <div class="booking-form-row">
+                <div>
+                    <div class="check-date">
+                        <label asp-for="BookingData.CheckIn">Заезд:</label>
+                        <input type="text" readonly="readonly" asp-for="BookingData.CheckIn" class="date-input" id="date-in">
+                        <i class="icon_calendar"></i>
+                        <span class="text-danger field-validation-valid" asp-validation-for="BookingData" />
+                    </div>
+                    <div class="check-date">
+                        <label asp-for="BookingData.CheckOut">Выезд:</label>
+                        <input type="text" readonly="readonly" asp-for="BookingData.CheckOut" class="date-input" id="date-out">
+                        <i class="icon_calendar"></i>
+                    </div>
+
                 </div>
-                <div class="check-date">
-                    <label asp-for="BookingData.CheckOut">Выезд:</label>
-                    <input type="text" value="@Model.BookingData.CheckOut" readonly="readonly" asp-for="BookingData.CheckOut" class="date-input" id="date-out">
-                    <i class="icon_calendar"></i>
+
+                <div class="select-option">
+                    <label asp-for="BookingData.AdultCount" for="guest">Гости:  </label>
+                    <select asp-for="BookingData.AdultCount" id="guest">
+                        <option value="1">1 Взрослый</option>
+                        <option value="2">2 Взрослых</option>
+                        <option value="3">3 Взрослых</option>
+                        <option value="4">4 Взрослых</option>
+                    </select>
+
                 </div>
-
+                <div class="select-option">
+                    <label asp-for="BookingData.ChildCount" for="child">Дети:  </label>
+                    <select asp-for="BookingData.ChildCount" id="child">
+                        <option value="0">Без детей</option>
+                        <option value="1">1 ребёнок</option>
+                        <option value="2">2 ребёнка</option>
+                    </select>
+                </div>
+                <input id="roomCategoryId" type="hidden" asp-for="BookingData.RoomCategoryId" />
+                <button id="btnSearch" type="submit">Проверить доступность</button>
+                <button id="btnRemoveFilter" type="button">Сбросить фильтр</button>
             </div>
-
-            <div class="select-option">
-                <label asp-for="BookingData.AdultCount" for="guest">Гости:  </label>
-                <select asp-for="BookingData.AdultCount" id="guest">
-                    <option value="1">1 Взрослый</option>
-                    <option value="2">2 Взрослых</option>
-                    <option value="3">3 Взрослых</option>
-                    <option value="4">4 Взрослых</option>
-                </select>
-
+        </form>
+        <div id="spinner">
+            <div id="cpinner-container">
+                <div class="loader1"></div>
             </div>
-            <div class="select-option">
-                <label asp-for="BookingData.ChildCount" for="child">Дети:  </label>
-                <select asp-for="BookingData.ChildCount" id="child">
-                    <option value="0">Без детей</option>
-                    <option value="1">1 ребёнок</option>
-                    <option value="2">2 ребёнка</option>
-                </select>
-            </div>
-            <button id="btnSearch" type="submit">Проверить доступность</button>
         </div>
+
         <div id="room-list"> </div>
         <div class="row" id="booking-info">
         </div>

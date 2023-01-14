@@ -102,10 +102,40 @@ ul, ol {
     margin: 0;
 }
 
+
 .flex-table {
     display: inline-block;
 }
 
+/*input[type="date"]::-webkit-color-datetime-edit {
+    padding: 1em;
+}
+
+input[type="date"]::-webkit-color-datetime-edit-fields-wrapper {
+    background: silver;
+}
+
+input[type="date"]
+
+input[type="date"]::-webkit-color-datetime-edit-month-field {
+    color: blue;
+}
+
+input[type="date"]::-webkit-color-datetime-edit-day-field {
+    color: green;
+}
+
+input[type="date"]::-webkit-color-datetime-edit-year-field {
+    color: purple;
+}
+
+input[type="date"]::-webkit-inner-spin-button {
+    display: none;
+}*/
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+    background-color: #ffffff;
+}
 /*---------------------
   Star raiting
 -----------------------*/
@@ -218,6 +248,50 @@ ul, ol {
     z-index: 999999;
     background: #ffffff;
 }
+
+#spinner {
+    display: none;
+    margin-top: 15%;
+}
+
+#cpinner-container {
+    display: flex;
+    justify-content: center;
+}
+
+.loader1 {
+    left: 50%;
+    border: 16px solid #f3f3f3; /* Light grey */
+    border-top: 16px solid #3498db; /* Blue */
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+        border: 4px solid #f44336;
+        border-left-color: transparent;
+    }
+
+    50% {
+        -webkit-transform: rotate(180deg);
+        transform: rotate(180deg);
+        border: 4px solid #673ab7;
+        border-left-color: transparent;
+    }
+
+    100% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+        border: 4px solid #f44336;
+        border-left-color: transparent;
+    }
+}
+
 
 .loader {
     width: 40px;
@@ -857,6 +931,53 @@ ul, ol {
         margin-top: 30px;
     }
 
+#booking-contact-info form .select-option {
+    margin-bottom: 15px;
+}
+
+    #booking-contact-info form .select-option label {
+        font-size: 14px;
+        color: #707079;
+        display: block;
+        margin-bottom: 10px;
+    }
+
+    #booking-contact-info form .select-option .nice-select {
+        border-radius: 2px;
+        border: 1px solid #ebebeb;
+        height: 50px;
+        line-height: 50px;
+        outline: none;
+        padding-left: 20px;
+        width: 100%;
+        float: none;
+    }
+
+        #booking-contact-info form .select-option .nice-select:after {
+            border-bottom: 2px solid #dfa974;
+            border-right: 2px solid #dfa974;
+            height: 10px;
+            margin-top: 0;
+            right: 20px;
+            width: 10px;
+            top: 36%;
+        }
+
+        #booking-contact-info form .select-option .nice-select span {
+            font-size: 16px;
+            color: #19191a;
+            text-transform: uppercase;
+            font-weight: 500;
+        }
+
+        #booking-contact-info form .select-option .nice-select .list {
+            margin-top: 0;
+            width: 100%;
+        }
+
+
+
+
 .hero-slider {
     position: absolute;
     width: 100%;
@@ -997,6 +1118,7 @@ ul, ol {
     border: 1px solid #D3D3D3;
     border-radius: 5px;
     padding: 10px;
+    margin-bottom: 20px;
     box-shadow: 0 5px 19px rgba(0, 0, 0, 0.09);
 }
 
@@ -1050,13 +1172,15 @@ ul, ol {
 
 #booking-contact-info {
     width: 100%;
-    display: grid;
-    grid-row-gap: 5px;
-    grid-template-columns: 1fr 1fr
+    display: block;
 }
 
+    #booking-contact-info * {
+        width: 100%;
+        display: block;
+    }
+
 #booking-confirm-info label {
-    padding-bottom: 5px;
 }
 
 #booking-confirm-info input {
@@ -1671,7 +1795,7 @@ ul, ol {
     display: -webkit-flex;
     display: -ms-flexbox;
     flex-wrap: wrap;
-    margin-top: 80px;
+    margin-top: 100px;
 }
 
 
@@ -1691,7 +1815,7 @@ ul, ol {
     .mini-room-detail button {
         right: 0;
         width: 40%;
-        margin: 20px;
+        margin: 10px;
         position: absolute;
         bottom: 0;
         font-size: 14px;
@@ -1706,7 +1830,7 @@ ul, ol {
     .mini-room-detail h4 {
         color: #dfa974;
         font-weight: 700;
-        margin-bottom: 14px;
+        margin-bottom: 30px;
     }
 
         .mini-room-detail h4 span {

@@ -10,6 +10,9 @@
 'use strict';
 
 (function ($) {
+    var d = new Date();
+    $(".date-input").attr("min", d);
+
 
     $('#galery-link').click(function ($e) {
         return false;
@@ -105,7 +108,7 @@
         minDate: 0,
         dateFormat: 'dd MM, yy'
     });
-   
+
 
     $.datepicker.regional['ru'] = {
         closeText: 'Закрыть',
