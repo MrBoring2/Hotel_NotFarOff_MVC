@@ -30,45 +30,44 @@ namespace Hotel_NotFarOff.Controllers
         //}
         [HttpGet]
         [AllowAnonymous]
-        public async Task<IActionResult> List()
+        public IActionResult List()
         {
-            return View(await _db.RoomCategories.Select(p => new RoomInList(p.Id, p.Title, p.PricePerDay, p.RoomCount, p.NumbeOfSeats, p.RoomSize, p.ShortDescription, p.MainImage, p.Rooms.AsEnumerable().Count(p => p.IsBooked == false))).AsQueryable().ToListAsync());
+            return View(_db.RoomCategories.AsQueryable().Include(p => p.Rooms).Select(p => new RoomInList(p.Id, p.Title, p.PricePerDay, p.RoomCount, p.NumbeOfSeats, p.RoomSize, p.ShortDescription, p.MainImage, p.Rooms.AsEnumerable().Count(p => p.IsBooked == false))));
         }
 
         [HttpPost]
-        public async Task<IActionResult> ForAdminList()
+        public IActionResult ForAdminList()
         {
-            var roomCategories = await _db.RoomCategories.Select(p =>
-            new RoomInList(p.Id, p.Title, p.PricePerDay, p.RoomCount, p.NumbeOfSeats, p.RoomSize, p.ShortDescription, p.MainImage, 0))
-                .AsQueryable().AsNoTracking().ToListAsync();
+            var roomCategories = _db.RoomCategories.AsQueryable().Select(p =>
+                    new RoomInList(p.Id, p.Title, p.PricePerDay, p.RoomCount, p.NumbeOfSeats, p.RoomSize, p.ShortDescription, p.MainImage, 0));
             return PartialView("_ForAdminList", roomCategories);
         }
 
         [HttpPost]
         [AllowAnonymous]
-        public async Task<IActionResult> List(BookingViewModel res)
+        public IActionResult List(BookingViewModel res)
         {
-            List<RoomCategory> rooms;
+            IQueryable<RoomCategory> rooms;
             int roomCategoryId = res.BookingData.RoomCategoryId;
             int guestCount = res.BookingData.AdultCount + res.BookingData.ChildCount;
             if (roomCategoryId == 0)
             {
                 if (guestCount > 0)
                 {
-                    rooms = await _db.RoomCategories.Where(p => p.Rooms.Any(p => p.IsBooked == false)).Where(p => p.NumbeOfSeats >= guestCount).AsQueryable().ToListAsync();
+                    rooms = _db.RoomCategories.AsQueryable().Include(p => p.Rooms).Where(p => p.Rooms.Any(p => p.IsBooked == false)).Where(p => p.NumbeOfSeats >= guestCount);
                 }
                 else
                 {
-                    rooms = await _db.RoomCategories.Where(p => p.Rooms.Any(p => p.IsBooked == false)).AsQueryable().ToListAsync();
+                    rooms = _db.RoomCategories.AsQueryable().Include(p => p.Rooms).Where(p => p.Rooms.Any(p => p.IsBooked == false));
                 }
             }
             else
             {
-                rooms = await _db.RoomCategories.Where(p => p.Id == roomCategoryId).Where(p => p.Rooms.Any(p => p.IsBooked == false)).Where(p => p.NumbeOfSeats >= guestCount).AsQueryable().ToListAsync();
+                rooms = _db.RoomCategories.AsQueryable().Include(p => p.Rooms).Where(p => p.Id == roomCategoryId).Where(p => p.Rooms.Any(p => p.IsBooked == false)).Where(p => p.NumbeOfSeats >= guestCount);
             }
-            if (rooms.Count > 0)
+            if (rooms.Count() > 0)
             {
-                var roomViewModel = rooms.Select(p => new RoomInList(p.Id, p.Title, p.PricePerDay, p.RoomCount, p.NumbeOfSeats, p.RoomSize, p.ShortDescription, p.MainImage, p.Rooms.Count(p => p.IsBooked == false))).ToList();
+                var roomViewModel = rooms.Select(p => new RoomInList(p.Id, p.Title, p.PricePerDay, p.RoomCount, p.NumbeOfSeats, p.RoomSize, p.ShortDescription, p.MainImage, p.Rooms.Count(p => p.IsBooked == false)));
                 return PartialView("_RoomList", roomViewModel);
             }
             else

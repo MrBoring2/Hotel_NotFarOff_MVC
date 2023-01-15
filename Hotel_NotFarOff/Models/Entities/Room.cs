@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Hotel_NotFarOff.Models.Entities
 {
-    public partial class Room
+    public partial class Room : BaseEntity
     {
         public Room()
         {
@@ -11,10 +11,11 @@ namespace Hotel_NotFarOff.Models.Entities
         }
 
         public int Id { get; set; }
-        public string RoomNumber { get; set; }
+        public int RoomNumber { get; set; }
         public int RoomCategoryId { get; set; }
         public int EmployeeId { get; set; }
         public bool IsBooked { get; set; }
+        public string RoomStatus => IsBooked ? "Забронирован" : "Свободен";
 
         public virtual Employee Employee { get; set; }
         public virtual RoomCategory RoomCategory { get; set; }

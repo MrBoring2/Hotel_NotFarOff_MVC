@@ -11481,7 +11481,7 @@
 				 *      } );
 				 *    } );
 				 */
-				"sSortAscending": ": activate to sort column ascending",
+				"sSortAscending": ": активировать для сортировки столбцов по возрастанию",
 	
 				/**
 				 * ARIA label that is added to the table headers when the column may be
@@ -11504,7 +11504,7 @@
 				 *      } );
 				 *    } );
 				 */
-				"sSortDescending": ": activate to sort column descending"
+				"sSortDescending": ": активировать для сортировки столбца по убыванию"
 			},
 	
 			/**
@@ -11534,7 +11534,7 @@
 				 *      } );
 				 *    } );
 				 */
-				"sFirst": "First",
+				"sFirst": "Первая",
 	
 	
 				/**
@@ -11557,7 +11557,7 @@
 				 *      } );
 				 *    } );
 				 */
-				"sLast": "Last",
+				"sLast": "Последняя",
 	
 	
 				/**
@@ -11580,7 +11580,7 @@
 				 *      } );
 				 *    } );
 				 */
-				"sNext": "Next",
+				"sNext": "Следующая",
 	
 	
 				/**
@@ -11603,7 +11603,7 @@
 				 *      } );
 				 *    } );
 				 */
-				"sPrevious": "Previous"
+				"sPrevious": "Предыдущая"
 			},
 	
 			/**
@@ -11626,7 +11626,7 @@
 			 *      } );
 			 *    } );
 			 */
-			"sEmptyTable": "No data available in table",
+			"sEmptyTable": "Данные в таблице отсутствуют",
 	
 	
 			/**
@@ -11658,7 +11658,7 @@
 			 *      } );
 			 *    } );
 			 */
-			"sInfo": "Showing _START_ to _END_ of _TOTAL_ entries",
+			"sInfo": "Показаны записи с _START_ по _END_ из _TOTAL_",
 	
 	
 			/**
@@ -11679,7 +11679,7 @@
 			 *      } );
 			 *    } );
 			 */
-			"sInfoEmpty": "Showing 0 to 0 of 0 entries",
+			"sInfoEmpty": "Показаны записи с 0 по 0 из 0",
 	
 	
 			/**
@@ -11701,7 +11701,7 @@
 			 *      } );
 			 *    } );
 			 */
-			"sInfoFiltered": "(filtered from _MAX_ total entries)",
+			"sInfoFiltered": "(отфильтровано из _MAX_ общего числа записей)",
 	
 	
 			/**
@@ -11819,7 +11819,7 @@
 			 *      } );
 			 *    } );
 			 */
-			"sLengthMenu": "Show _MENU_ entries",
+			"sLengthMenu": "Показать _MENU_ записей",
 	
 	
 			/**
@@ -11843,7 +11843,7 @@
 			 *      } );
 			 *    } );
 			 */
-			"sLoadingRecords": "Loading...",
+			"sLoadingRecords": "Загрузка...",
 	
 	
 			/**
@@ -11864,7 +11864,7 @@
 			 *      } );
 			 *    } );
 			 */
-			"sProcessing": "Processing...",
+			"sProcessing": "Обработка...",
 	
 	
 			/**
@@ -11899,7 +11899,7 @@
 			 *      } );
 			 *    } );
 			 */
-			"sSearch": "Search:",
+			"sSearch": "Поиск:",
 	
 	
 			/**
@@ -11910,7 +11910,7 @@
 			 *  @dtopt Language
 			 *  @name DataTable.defaults.language.searchPlaceholder
 			 */
-			"sSearchPlaceholder": "",
+			"sSearchPlaceholder": "Введите текст",
 	
 	
 			/**
@@ -11957,7 +11957,7 @@
 			 *      } );
 			 *    } );
 			 */
-			"sZeroRecords": "No matching records found"
+			"sZeroRecords": "Не найдено совпадающих записей"
 		},
 	
 	

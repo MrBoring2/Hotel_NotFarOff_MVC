@@ -41,7 +41,7 @@ namespace Hotel_NotFarOff.Controllers
         {
             if (ModelState.IsValid)
             {
-                var employee = await _db.Employees.FirstOrDefaultAsync(p => p.Account.Login.Equals(vm.Login) && p.Account.Password.Equals(vm.Password));
+                var employee = await _db.Employees.Include(p => p.Account).FirstOrDefaultAsync(p => p.Account.Login.Equals(vm.Login) && p.Account.Password.Equals(vm.Password));
 
                 //TODO: проверка пароля, загрузка пользователя из БД, и т.д. и т.п.
 
