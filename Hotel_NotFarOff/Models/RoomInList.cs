@@ -1,9 +1,9 @@
 ﻿namespace Hotel_NotFarOff.Models
 {
-    public class RoomInList
+    public class RoomCategoryInList
     {
 
-        public RoomInList(int id, string title, decimal pricePerDay, int roomCount, int numbeOfSeats, double roomSize, string shortDescription, byte[] mainImage, int roomsLast = 0)
+        public RoomCategoryInList(int id, string title, decimal pricePerDay, int roomCount, int numbeOfSeats, double roomSize, string shortDescription, byte[] mainImage, int roomsLast = 0)
         {
             Id = id;
             Title = title;

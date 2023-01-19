@@ -14,6 +14,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Hotel_NotFarOff.Controllers
 {
@@ -43,6 +44,8 @@ namespace Hotel_NotFarOff.Controllers
             var sortColumn = Request.Form["columns[" + Request.Form["order[0][column]"].FirstOrDefault() + "][name]"].FirstOrDefault();
             var sortColumnDirection = Request.Form["order[0][dir]"].FirstOrDefault();
             var searchValue = Request.Form["search[value]"].FirstOrDefault();
+            var filterRoomCategory = int.Parse(Request.Form["filterRoomCategory"].FirstOrDefault());
+            var filterRoomStatus = int.Parse(Request.Form["filterRoomStatus"].FirstOrDefault());
             int pageSize = Convert.ToInt32(Request.Form["length"].FirstOrDefault() ?? "0");
             int skip = Convert.ToInt32(Request.Form["start"].FirstOrDefault() ?? "0");
             var data = _db.Rooms.Include(p => p.RoomCategory).AsQueryable();
@@ -53,6 +56,17 @@ namespace Hotel_NotFarOff.Controllers
             {
                 data = data.Where(x => x.RoomNumber.ToString().ToLower().Contains(searchValue.ToLower()) || x.RoomCategory.Title.ToLower().Contains(searchValue.ToLower()));
             }
+
+            if (filterRoomCategory != 0)
+            {
+                data = data.Where(p => p.RoomCategoryId == filterRoomCategory);
+            }
+
+            if (filterRoomStatus != -1)
+            {
+                data = data.Where(p => p.IsBooked == Convert.ToBoolean(filterRoomStatus));
+            }
+
             // get total count of records after search
             filterRecord = data.Count();
             //sort data
@@ -100,57 +114,80 @@ namespace Hotel_NotFarOff.Controllers
         // POST: RoomCategories/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Title,PricePerDay,RoomCount,NumbeOfSeats,RoomSize,ShortDescription,Description,Services,MainImage")] RoomCategory roomCategory)
+        public async Task<IActionResult> Create(Room room)
         {
             if (ModelState.IsValid)
             {
-                _db.Add(roomCategory);
+                if (_db.Rooms.FirstOrDefault(p => p.RoomNumber == room.RoomNumber) != null)
+                {
+                    ModelState.AddModelError("RoomCategoryId", "Комната с таким номером уже существует");
+                    return BadRequest("Комната с таким номером уже существует");
+                }
+
+                _db.Add(room);
                 await _db.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return Ok("Комната успешно создана");
             }
-            return View(roomCategory);
+            var a = ModelState.Values.SelectMany(v => v.Errors);
+            ModelState.AddModelError("Error", "Произошла ошибка при создании");
+            return BadRequest("Произошла ошибка при создании");
         }
 
         // GET: RoomCategories/Edit/5
+        [Authorize]
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _db.RoomCategories == null)
+            if (id == null || _db.Rooms == null)
             {
                 return NotFound();
             }
 
-            var roomCategory = await _db.RoomCategories.FindAsync(id);
-            if (roomCategory == null)
+            var room = await _db.Rooms.FindAsync(id);
+            if (room == null)
             {
                 return NotFound();
             }
-            return View(roomCategory);
+            return View(room);
         }
 
         // POST: RoomCategories/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,PricePerDay,RoomCount,NumbeOfSeats,RoomSize,ShortDescription,Description,Services,MainImage")] RoomCategory roomCategory)
+        public async Task<IActionResult> Edit(int id, Room room)
         {
-            if (id != roomCategory.Id)
+            if (id != room.Id)
             {
                 return NotFound();
             }
 
             if (ModelState.IsValid)
             {
+                var item = _db.Rooms.AsNoTracking().FirstOrDefault(p => p.RoomNumber == room.RoomNumber);
+                if (item != null)
+                {
+                    if (item.Id != room.Id)
+                    {
+                        ModelState.AddModelError("RoomCategoryId", "Комната с таким номером уже существует");
+                        return BadRequest("Комната с таким номером уже существует");
+                    }
+                }
                 try
                 {
-                    _db.Update(roomCategory);
+                    var employeeId = Convert.ToInt32(HttpContext.User.Claims.FirstOrDefault(p => p.Type == "Id").Value);
+                    room.EmployeeId = (await _db.Employees.FirstOrDefaultAsync(p => p.Id == employeeId)).Id;
+                    room.UpdatedDate = DateTime.Now;
+                    _db.Update(room);
                     await _db.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!RoomCategoryExists(roomCategory.Id))
+                    if (!RoomCategoryExists(room.Id))
                     {
                         return NotFound();
                     }
@@ -159,51 +196,42 @@ namespace Hotel_NotFarOff.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return Ok("Комната успешно обновлена");
             }
-            return View(roomCategory);
+            return BadRequest("Произошла ошибка при обновлении");
         }
 
         // GET: RoomCategories/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null || _db.RoomCategories == null)
-            {
-                return NotFound();
-            }
-
-            var roomCategory = await _db.RoomCategories
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (roomCategory == null)
-            {
-                return NotFound();
-            }
-
-            return View(roomCategory);
-        }
-
         // POST: RoomCategories/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        [Authorize]
+        [HttpPost]
+        public async Task<IActionResult> Delete(int id)
         {
-            if (_db.RoomCategories == null)
+            if (_db.Rooms == null)
             {
-                return Problem("Entity set 'HotelNotFarOffContext.RoomCategories'  is null.");
+                return BadRequest("Entity set 'HotelNotFarOffContext.Rooms' is null.");
             }
-            var roomCategory = await _db.RoomCategories.FindAsync(id);
-            if (roomCategory != null)
+            var room = await _db.Rooms.Include(p => p.Bookings).FirstOrDefaultAsync(p => p.Id == id);
+            if (room.Bookings.Count > 0)
             {
-                _db.RoomCategories.Remove(roomCategory);
+                return BadRequest("У номера есть существующие или проведённые бронирования. Такой нмоер удалить нельзя.");
+            }
+            if (room != null)
+            {
+                _db.Rooms.Remove(room);
+            }
+            else
+            {
+                return BadRequest("Не найдена комната");
             }
 
             await _db.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return Ok();
         }
 
         private bool RoomCategoryExists(int id)
         {
-            return _db.RoomCategories.Any(e => e.Id == id);
+            return _db.Rooms.Any(e => e.Id == id);
         }
 
 

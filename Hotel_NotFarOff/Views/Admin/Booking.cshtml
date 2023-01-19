@@ -1,0 +1,16 @@
+﻿@using Hotel_NotFarOff.Enums
+@using Hotel_NotFarOff.Models.Entities
+@using Hotel_NotFarOff.ViewModels
+@model TEntityPageViewModel<Booking>
+<div class="container">
+    @{
+        if (Model.PageType == PageTypeEnum.Edit)
+        {
+            await Html.RenderPartialAsync("../Booking/_Edit", Model.Entity);
+        }
+        else if (Model.PageType == PageTypeEnum.Details)
+        {
+            await Html.RenderPartialAsync("../Booking/_Details", Model.Entity);
+        }
+    }
+</div>

@@ -1,6 +1,7 @@
 ﻿@using Microsoft.AspNetCore.Http
 
 @{
+    var a = this.ViewContext.RouteData;
     var controller = this.ViewContext.RouteData.Values["controller"].ToString();
 
     string layout = "";

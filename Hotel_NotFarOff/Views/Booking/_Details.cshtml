@@ -1,0 +1,69 @@
+﻿@model Hotel_NotFarOff.Models.Entities.Booking
+
+<div>
+    <h4>Информация о бронировании</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            ФИО заказчика
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TenantFio)
+        </dd>
+        <dt class="col-sm-2">
+            Номер телефона заказчика
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.PhoneNumber)
+        </dd>
+        <dt class="col-sm-2">
+            Почта заказчика
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+        <dt class="col-sm-2">
+            Дата заезда
+        </dt>
+        <dd class="col-sm-10">
+            @Model.CheckIn.ToShortDateString()
+        </dd>
+        <dt class="col-sm-2">
+            Дата выезда
+        </dt>
+        <dd class="col-sm-10">
+            @Model.CheckOut.ToShortDateString()
+        </dd>
+        <dt class="col-sm-2">
+            Статус бронирования
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.BookingStatus.Title)
+        </dd>
+        <dt class="col-sm-2">
+            Номер комнаты
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Room.RoomNumber)
+        </dd>
+        <dt class="col-sm-2">
+            Способ оплаты
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.PaymentMethod.Title)
+        </dd>
+        <dt class="col-sm-2">
+            Гости
+        </dt>
+        <dd class="col-sm-10">
+            @foreach (var item in Model.Guests)
+            {
+                @item.FullName <br />
+            }
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="BookingEdit" asp-route-id="@Model.Id">Редактировать</a> |
+    <a asp-action="BookingList">Назад к списку</a>
+</div>

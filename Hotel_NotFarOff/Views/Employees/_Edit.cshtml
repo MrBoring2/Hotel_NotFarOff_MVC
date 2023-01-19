@@ -1,0 +1,74 @@
+﻿@model Hotel_NotFarOff.Models.Entities.Employee
+@{
+    Layout = "~/Views/Shared/AdminLTE/_AdminPartialViewLayout.cshtml";
+}
+<h4>Редактирование сотрудника</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post" data-ajax="true" data-ajax-method="post" data-ajax-complete="completed" data-ajax-url="/Employees/Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="Account.EmployeeId" />
+            <input id="post" type="hidden" value="@Model.PostId" />
+            <div class="form-group">
+                <label asp-for="FullName" class="control-label">ФИО</label>
+                <input asp-for="FullName" class="form-control" />
+                <span asp-validation-for="FullName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Passport" class="control-label">Паспорт</label>
+                <input asp-for="Passport" class="form-control" />
+                <span asp-validation-for="Passport" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PhoneNumber" class="control-label">Номер телефона</label>
+                <input asp-for="PhoneNumber" class="form-control" />
+                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DateOfBirth" class="control-label">Дата рождения</label>
+                <input asp-for="DateOfBirth" type="date" class="form-control" />
+                <span asp-validation-for="DateOfBirth" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PostId" class="control-label">Должность</label>
+                <select id="posts" asp-for="PostId" class="form-control"></select>
+                <span asp-validation-for="PostId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Gender" class="control-label">Пол</label>
+                <select id="gender" asp-for="Gender" class="form-control">
+                    <option value="мужской">Мужской</option>
+                    <option value="женский">Женский</option>
+                </select>
+                <span asp-validation-for="Gender" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Account.Login" class="control-label">Логин</label>
+                <input asp-for="Account.Login" class="form-control" />
+                <span asp-validation-for="Account.Login" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Account.Password" class="control-label">Пароль</label>
+                <input asp-for="Account.Password" class="form-control" />
+                <span asp-validation-for="Account.Password" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LastChange" class="control-label">Последнее обновление</label>
+                <input asp-for="LastChange" readonly="readonly" class="form-control" />
+                <span asp-validation-for="LastChange" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Сохранить" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="EmployeesList">Назад к списку</a>
+</div>
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/js/employee_view.js"></script>

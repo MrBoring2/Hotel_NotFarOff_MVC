@@ -1,0 +1,106 @@
+﻿@using Hotel_NotFarOff.ViewModels
+@model RoomCategoryViewModel
+
+<div>
+    <h4>Информация о категории комнаты</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            Название
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+        <dt class = "col-sm-2">
+            Цена за ночь
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.PricePerDay)
+        </dd>
+        <dt class = "col-sm-2">
+            Комнат в номере
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.RoomCount)
+        </dd>
+        <dt class = "col-sm-2">
+            Вместимость
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.NumbeOfSeats)
+        </dd>
+        <dt class = "col-sm-2">
+            Площадь
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.RoomSize)
+        </dd>
+        <dt class = "col-sm-2">
+            Краткое описание
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ShortDescription)
+        </dd>
+        <dt class = "col-sm-2">
+            Описание
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+        <dt class = "col-sm-2">
+            Сервисы
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.StringServices)
+        </dd>
+        <dt class = "col-sm-2">
+            Главное изображение
+        </dt>
+         <dd class = "col-sm-10">
+            <img src="data:image/jpeg;base64,@(Convert.ToBase64String(Model.MainImage))" style="width:40%;"/>
+        </dd>
+        
+        <dt class = "col-sm-2">
+            Дополнительное изображение 1
+        </dt>
+        <dd class = "col-sm-10">
+            <img src="data:image/jpeg;base64,@(Convert.ToBase64String(Model.RoomImages[0].Image))" style="width:40%;" />
+        </dd>
+        <dt class = "col-sm-2">
+              Дополнительное изображение 2
+        </dt>
+        <dd class = "col-sm-10">
+             <img src="data:image/jpeg;base64,@(Convert.ToBase64String(Model.RoomImages[1].Image))" style="width:40%;"/>
+        </dd>
+         <dt class = "col-sm-2">
+              Дополнительное изображение 3
+        </dt>
+        <dd class = "col-sm-10">
+            <img src="data:image/jpeg;base64,@(Convert.ToBase64String(Model.RoomImages[2].Image))" style="width:40%;"/>
+        </dd>
+        <dt class="col-sm-2">
+            Последнее изменение
+        </dt>
+        <dd class="col-sm-10">
+            @Model.LastChange
+        </dd>
+        <dt class="col-sm-2">
+            Последним изменил
+        </dt>
+        <dd class="col-sm-10">
+            @Model.LastEmlpoyee
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="RoomCategoryEdit" asp-route-id="@Model.Id">Редактировать</a> |
+    <a asp-action="RoomCategoriesList">Назад к списку</a>
+</div>
+
+<script src="~/plugins/jquery/jquery.js"></script>
+<script src="~/plugins/jquery/jquery.slim.js"></script>
+@*<script src="~/plugins/bootstrap/js/bootstrap.js"></script>*@
+@*<script src="~/plugins/multi-select/js/bootstrap-multiselect.js"></script>
+<link rel="stylesheet" href="~/plugins/multi-select/css/bootstrap-multiselect.min.css" />*@
+<script src="~/plugins/multi-min/multi.min.js"></script>
+<script src="~/js/roomCategories_view.js"></script>

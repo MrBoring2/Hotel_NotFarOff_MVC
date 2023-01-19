@@ -1,11 +1,40 @@
 ﻿@using Hotel_NotFarOff.Models
-@model IEnumerable<RoomInList>
+@model IEnumerable<RoomCategoryInList>
+@{
+    Layout = "~/Views/Shared/AdminLTE/_AdminPartialViewLayout.cshtml";
+}
 
-<p>
-    <a asp-action="Create">Добавить новый</a>
-</p>
-<table class="table">
+<a class='btn btn-primary btn-sm' style='margin-right:3px' asp-action="RoomCategoryCreate"><i class='fas fa-plus'></i>Добавить новый</a>
+<table id="roomCategoriesTable" class="display responsive wrap" style="width:100%">
     <thead>
+        <tr>
+            <th>
+                Id
+            </th>
+            <th>
+                Наименование
+            </th>
+            <th>
+                Стоимость за ночь
+            </th>
+            <th>
+                Комнат в номере
+            </th>
+            <th>
+                Вместимость
+            </th>
+            <th>
+                Площадь
+            </th>
+            <th>
+                Изображение
+            </th>
+            <th>
+                Действия
+            </th>
+        </tr>
+    </thead>
+    <tfoot>
         <tr>
             <th>
                 Id
@@ -32,38 +61,8 @@
                 Действия
             </th>
         </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Id)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Title)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.PricePerDay)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.RoomCount)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.NumbeOfSeats)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.RoomSize)
-                </td>
-                <td>
-                    <img class="main-image-small" style="width:40%" src="@Url.Action("GetFileFromBytes", "RoomCategories", new { id = @item.Id})" alt="" />
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id" title="Редактировать"><i class="nav-icon fas fa-edit fa-2xl" style="transform: scale(1.2,1);margin-right:3px;"></i></a>
-                    <a asp-action="Details" asp-route-id="@item.Id" title="Подробнее"><i class="nav-icon fas fa-info-circle fa-2xl" style="transform: scale(1.2,1);margin-right:3px;"></i></a>
-                    <a asp-action="Delete" asp-route-id="@item.Id" title="Удалить"><i class="nav-icon fas fa-window-close fa-2xl" style="transform: scale(1.2,1);margin-right:3px;"></i></a>
-                </td>
-            </tr>
-        }
-    </tbody>
+    </tfoot>
 </table>
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/js/datatables_roomCategories.js"></script>

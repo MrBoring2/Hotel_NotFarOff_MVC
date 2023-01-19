@@ -1,6 +1,17 @@
 ﻿@model IEnumerable<Hotel_NotFarOff.Models.Entities.Booking>
+@{
+    Layout = "~/Views/Shared/AdminLTE/_AdminPartialViewLayout.cshtml";
+}
 
-<table class="table">
+<div id="filter">
+    <div>
+        <label>Статус бронирования</label>
+        <select id="bookingStatuses">
+            <option value=0>Все</option>
+        </select>
+    </div>
+</div>
+<table id="bookingTable" class="display responsive wrap" style="width:100%">
     <thead>
         <tr>
             <th>
@@ -29,35 +40,34 @@
             </th>
         </tr>
     </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Id)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.TenantFio)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.PhoneNumber)
-                </td>
-                <td>
-                    @item.CheckIn.ToShortDateString()
-                </td>
-                <td>
-                    @item.CheckOut.ToShortDateString()
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.BookingStatus.Title)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Room.RoomNumber)
-                </td>
-                <td>
-                    <a asp-action="Details" asp-route-id="@item.Id" title="Подробнее"><i class="nav-icon fas fa-info-circle fa-2xl" style="transform: scale(1.2,1);margin-right:3px;"></i></a>
-                </td>
-            </tr>
-        }
-    </tbody>
+    <tfoot>
+        <tr>
+            <th>
+                Номер бронирования
+            </th>
+            <th>
+                ФИО заказчика
+            </th>
+            <th>
+                Телефон заказчика
+            </th>
+            <th>
+                Заезд
+            </th>
+            <th>
+                Выезд
+            </th>
+            <th>
+                Статус
+            </th>
+            <th>
+                Номер комнаты
+            </th>
+            <th>
+                Действия
+            </th>
+        </tr>
+    </tfoot>
 </table>
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/js/datatables_booking.js"></script>

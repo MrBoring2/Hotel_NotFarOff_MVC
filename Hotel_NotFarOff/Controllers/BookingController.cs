@@ -13,6 +13,7 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Dynamic.Core;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -36,7 +37,7 @@ namespace Hotel_NotFarOff.Controllers
         {
             if (ModelState.IsValid)
             {
-                return View(new BookingViewModel(bookingData, await _db.PaymentMethods.ToListAsync()));
+                return View(new GuestBookingViewModel(bookingData, await _db.PaymentMethods.ToListAsync()));
 
             }
             else
@@ -55,6 +56,61 @@ namespace Hotel_NotFarOff.Controllers
             var bookings = await _db.Bookings.AsQueryable().ToListAsync();
             return PartialView("_List", bookings);
         }
+
+        [HttpPost]
+        public JsonResult GetList()
+        {
+            int totalRecord = 0;
+            int filterRecord = 0;
+            var draw = Request.Form["draw"].FirstOrDefault();
+            var sortColumn = Request.Form["columns[" + Request.Form["order[0][column]"].FirstOrDefault() + "][name]"].FirstOrDefault();
+            var sortColumnDirection = Request.Form["order[0][dir]"].FirstOrDefault();
+            var searchValue = Request.Form["search[value]"].FirstOrDefault();
+            var filterBookingStatus = int.Parse(Request.Form["filterBookingStatus"].FirstOrDefault());
+            int pageSize = Convert.ToInt32(Request.Form["length"].FirstOrDefault() ?? "0");
+            int skip = Convert.ToInt32(Request.Form["start"].FirstOrDefault() ?? "0");
+            var data = _db.Bookings.Include(p => p.Room).Include(p => p.BookingStatus).AsQueryable();
+            //get total count of data in table
+            totalRecord = data.Count();
+            // search data when search value found
+            if (!string.IsNullOrEmpty(searchValue))
+            {
+                data = data.Where(x => x.TenantFio.ToLower().Contains(searchValue.ToLower()) || x.Email.ToLower().ToLower().Contains(searchValue.ToLower())
+                                             || x.PhoneNumber.ToLower().Contains(searchValue.ToLower()) || x.Id.ToString().ToLower().Contains(searchValue.ToLower()));
+            }
+
+            if (filterBookingStatus != 0)
+            {
+                data = data.Where(p => p.BookingStatusId == filterBookingStatus);
+            }
+
+            // get total count of records after search
+            filterRecord = data.Count();
+            //sort data
+            if (!string.IsNullOrEmpty(sortColumn) && !string.IsNullOrEmpty(sortColumnDirection))
+            {
+                data = data.OrderBy(sortColumn + " " + sortColumnDirection);
+            }
+            //pagination
+            var empList = data.Skip(skip).Take(pageSize);
+            var returnObj = new
+            {
+                draw = draw,
+                recordsTotal = totalRecord,
+                recordsFiltered = filterRecord,
+                data = empList.ToList()
+            };
+
+            return Json(returnObj, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore! });
+        }
+
+        [HttpGet]
+        public JsonResult GetStatusesTitlesList()
+        {
+            return Json(_db.BookingStatuses.AsQueryable().Select(p => new { id = p.Id, title = p.Title }));
+        }
+
+
         [AllowAnonymous]
         public IActionResult Create() => View();
 
@@ -66,13 +122,13 @@ namespace Hotel_NotFarOff.Controllers
             bookingData.CheckIn = bookingData.CheckIn.ToLocalTime();
             bookingData.CheckOut = bookingData.CheckOut.ToLocalTime();
             var roomCategory = await _db.RoomCategories.FirstOrDefaultAsync(p => p.Id == bookingData.RoomCategoryId);
-            return PartialView("_Confirm", new BookingViewModel(bookingData, roomCategory, await _db.PaymentMethods.ToListAsync()));
+            return PartialView("_Confirm", new GuestBookingViewModel(bookingData, roomCategory, await _db.PaymentMethods.ToListAsync()));
 
         }
 
         [HttpPost]
         [AllowAnonymous]
-        public async Task<IActionResult> Create(BookingViewModel bookingViewModel)
+        public async Task<IActionResult> Create(GuestBookingViewModel bookingViewModel)
         {
             if (ModelState.IsValid)
             {
@@ -106,6 +162,42 @@ namespace Hotel_NotFarOff.Controllers
             }
 
             return BadRequest("Ввведены неккоректные данные.");
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, Booking booking)
+        {
+            if (id != booking.Id)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    var bookingDb = await _db.Bookings.FirstOrDefaultAsync(p => p.Id == id);
+                    bookingDb.BookingStatusId = booking.BookingStatusId;
+                    await _db.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!BookingExists(booking.Id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return Ok("Бронирование успешно изменёнено");
+            }
+            return BadRequest("Не все данные введены корректно");
+        }
+        private bool BookingExists(int id)
+        {
+            return _db.Bookings.Any(e => e.Id == id);
         }
     }
 }

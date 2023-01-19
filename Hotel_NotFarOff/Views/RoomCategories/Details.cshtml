@@ -1,7 +1,7 @@
 ﻿@using Hotel_NotFarOff.Models.Entities
 @using Hotel_NotFarOff.TagHelpersExtentions
 @using Hotel_NotFarOff.ViewModels
-@model RoomCategoryViewModel
+@model RoomCategoryInListViewModel
 
 @{
     ViewData["Title"] = "Подробнее о комнате";
@@ -48,7 +48,7 @@
                                 </tr>
                                 <tr>
                                     <td class="r-o">Сервисы:</td>
-                                    <td>@Html.DisplayFor(model => model.RoomCategory.Services)</td>
+                                    <td>@Html.DisplayFor(model => model.Services)</td>
                                 </tr>
                             </tbody>
                         </table>

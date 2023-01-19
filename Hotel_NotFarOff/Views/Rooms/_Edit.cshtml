@@ -1,0 +1,47 @@
+﻿@model Hotel_NotFarOff.Models.Entities.Room
+
+<h4>Редактирование номера</h4>
+<hr />
+<div class="row">
+    <div class="col-md-6">
+        <form method="post" data-ajax="true" data-ajax-method="post" data-ajax-complete="completed" data-ajax-url="/Rooms/Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <input id="roomCategory" type="hidden" value="@Model.RoomCategoryId" />
+            <div class="form-group">
+                <label asp-for="RoomNumber" class="control-label">Номер комнаты</label>
+                <input asp-for="RoomNumber" class="form-control" />
+                <span asp-validation-for="RoomNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="RoomCategoryId" class="control-label">Категория номера</label>
+                <select id="roomCategories" asp-for="RoomCategoryId" class="form-control"></select>
+                <span asp-validation-for="RoomCategoryId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="RoomStatus" class="control-label">Статус номера</label>
+                <input asp-for="RoomStatus" class="form-control" readonly="readonly" />
+            </div>
+            <div class="form-group">
+                <label asp-for="LastEmlpoyee" class="control-label">Последним изменил</label>
+                <input asp-for="LastEmlpoyee" class="form-control" readonly="readonly" />
+                <span asp-validation-for="EmployeeId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LastChange" class="control-label">Последнее изменение</label>
+                <input asp-for="LastChange" class="form-control" readonly="readonly" />
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Сохранить" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="RoomsList">Назад к списку</a>
+</div>
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/js/room_view.js"></script>
+

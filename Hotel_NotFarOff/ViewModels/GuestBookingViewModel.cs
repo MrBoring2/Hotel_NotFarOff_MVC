@@ -9,7 +9,7 @@ using System.Linq;
 
 namespace Hotel_NotFarOff.ViewModels
 {
-    public class BookingViewModel
+    public class GuestBookingViewModel
     {
         public BookingData BookingData { get; set; }
         public int NightCount => BookingData == null ? 0 : (BookingData.CheckOut - BookingData.CheckIn).Days;
@@ -52,11 +52,11 @@ namespace Hotel_NotFarOff.ViewModels
             }
         }
 
-        public BookingViewModel()
+        public GuestBookingViewModel()
         {
         }
 
-        public BookingViewModel(BookingData bookingData, RoomCategory roomCategory, ICollection<PaymentMethod> paymentMethods)
+        public GuestBookingViewModel(BookingData bookingData, RoomCategory roomCategory, ICollection<PaymentMethod> paymentMethods)
         {
             BookingData = bookingData;
             RoomCategory = roomCategory;
@@ -67,7 +67,7 @@ namespace Hotel_NotFarOff.ViewModels
             }
             PaymentMethods = paymentMethods.ToList();
         }
-        public BookingViewModel(BookingData bookingData, ICollection<PaymentMethod> paymentMethods)
+        public GuestBookingViewModel(BookingData bookingData, ICollection<PaymentMethod> paymentMethods)
         {
             BookingData = bookingData;
             Guests = new GuestModel[bookingData.AdultCount + bookingData.ChildCount];

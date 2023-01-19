@@ -1,0 +1,113 @@
+﻿@using Hotel_NotFarOff.ViewModels
+@model RoomCategoryViewModel
+@{
+    Layout = "~/Views/Shared/AdminLTE/_AdminPartialViewLayout.cshtml";
+}
+@*<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css">*@
+<link rel="stylesheet" href="~/plugins/multi-min/multi.min.css">
+
+<link rel="stylesheet" href="~/css/admin-panel.css">
+
+<h4>Редактирование комнаты</h4>
+<hr />
+<div class="row">
+    <div class="col-md-6">
+        <form method="post" data-ajax="true" data-ajax-method="post" data-ajax-complete="completed" data-ajax-url="/RoomCategories/Edit" data-ajax-loading="#spinner-fixed" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="Title" class="control-label">Название</label>
+                <input asp-for="Title" class="form-control" />
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PricePerDay" class="control-label">Стоимость за ночь</label>
+                <input type="text" asp-for="PricePerDay" class="form-control" />
+                <span asp-validation-for="PricePerDay" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="RoomCount" class="control-label">Комнат в номере</label>
+                <input asp-for="RoomCount" class="form-control" />
+                <span asp-validation-for="RoomCount" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NumbeOfSeats" class="control-label">Вместимость</label>
+                <input asp-for="NumbeOfSeats" class="form-control" />
+                <span asp-validation-for="NumbeOfSeats" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="RoomSize" class="control-label">Площадь</label>
+                <input asp-for="RoomSize" class="form-control" />
+                <span asp-validation-for="RoomSize" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ShortDescription" class="control-label">Краткое описание</label>
+                <textarea asp-for="ShortDescription" class="form-control"></textarea>
+                <span asp-validation-for="ShortDescription" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label">Описание</label>
+                <textarea asp-for="Description" type="" class="form-control"></textarea>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Services" class="control-label">Сервисы</label>
+                @Html.ListBoxFor(model => model.ServicesIds, new MultiSelectList(Model.Services, "Value", "Text"), new { @class = "form-control", multiple = "multiple", id = "Services_dropdown" })
+                <span asp-validation-for="Services" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MainImage" class="control-label">Главное изображение</label>
+                <img id="main-image" src="data:image/jpeg;base64,@(Convert.ToBase64String(Model.MainImage))" style="width:100%;" />
+                <input id="main-image-input" type="file" asp-for="MainImageFile" class="form-control" accept=".png, .jpg, .jpeg" />
+                <span asp-validation-for="MainImageFile" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label @*asp-for="RoomImages"*@ class="control-label">Галерея</label>
+                <div>
+                    <label asp-for="RoomImage1" class="control-label">Изображение 1</label>
+                    <img id="room-images-0" src="data:image/jpeg;base64,@(Convert.ToBase64String(Model.RoomImages[0].Image))" style="width:100%;" />
+                    <input id="room-images-0-input" type="file" asp-for="RoomImage1" class="form-control" accept=".png, .jpg, .jpeg" />
+                    <span asp-validation-for="RoomImage1" class="text-danger"></span>
+                </div>
+                <div>
+                    <label asp-for="RoomImages[1].Image" class="control-label">Изображение 2</label>
+                    <img id="room-images-1" src="data:image/jpeg;base64,@(Convert.ToBase64String(Model.RoomImages[1].Image))" style="width:100%;" />
+                    <input id="room-images-1-input" type="file" asp-for="RoomImage2" class="form-control" accept=".png, .jpg, .jpeg" />
+                    <span asp-validation-for="RoomImage2" class="text-danger"></span>
+                </div>
+                <div>
+                    <label asp-for="RoomImages[2].Image" class="control-label">Изображение 3</label>
+                    <img id="room-images-2" src="data:image/jpeg;base64,@(Convert.ToBase64String(Model.RoomImages[2].Image))" style="width:100%;" />
+                    <input id="room-images-2-input" type="file" asp-for="RoomImage3" class="form-control" accept=".png, .jpg, .jpeg" />
+                    <span asp-validation-for="RoomImage3" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="LastEmlpoyee" class="control-label">Последним изменил</label>
+                <input asp-for="LastEmlpoyee" class="form-control" readonly="readonly" />
+                <span asp-validation-for="Employee.Id" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LastChange" class="control-label">Последнее изменение</label>
+                <input asp-for="LastChange" class="form-control" readonly="readonly" />
+            </div>
+            <div class="form-group">
+                <input id="submitButton" type="submit" value="Сохранить" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="RoomCategoriesList">Назад к списку</a>
+</div>
+
+
+
+<script src="~/plugins/jquery/jquery.js"></script>
+<script src="~/plugins/jquery/jquery.slim.js"></script>
+@*<script src="~/plugins/bootstrap/js/bootstrap.js"></script>*@
+@*<script src="~/plugins/multi-select/js/bootstrap-multiselect.js"></script>
+<link rel="stylesheet" href="~/plugins/multi-select/css/bootstrap-multiselect.min.css" />*@
+<script src="~/plugins/multi-min/multi.min.js"></script>
+<script src="~/js/roomCategories_view.js"></script>

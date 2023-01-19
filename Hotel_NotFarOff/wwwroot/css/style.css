@@ -254,6 +254,12 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     margin-top: 15%;
 }
 
+#spinner-fixed {
+    display: none;
+    position: fixed;
+    margin-top: 15%;
+}
+
 #cpinner-container {
     display: flex;
     justify-content: center;
@@ -352,8 +358,9 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 .main-image-small {
     display: block;
     width: 5%;
-    max-width:20%;
+    max-width: 20%;
 }
+
 .table-column-flex {
     display: flex;
     flex-direction: column;

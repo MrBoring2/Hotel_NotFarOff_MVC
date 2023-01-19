@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Hotel_NotFarOff.Models.Entities
 {
-    public partial class Booking
+    public partial class Booking : BaseEntity
     {
         public Booking()
         {

@@ -1,0 +1,34 @@
+﻿@model Hotel_NotFarOff.Models.Entities.Room
+@{
+    Layout = "~/Views/Shared/AdminLTE/_AdminPartialViewLayout.cshtml";
+}
+<h4>Создание номера</h4>
+<hr />
+<div class="row">
+    <div class="col-md-6">
+        <form method="post" data-ajax="true" data-ajax-method="post" data-ajax-complete="completed" data-ajax-url="/Rooms/Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="RoomNumber" class="control-label">Номер комнаты</label>
+                <input asp-for="RoomNumber" class="form-control" />
+                <span asp-validation-for="RoomNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="RoomCategoryId" class="control-label">Категория номера</label>
+                <select id="roomCategories" asp-for="RoomCategoryId" class="form-control"></select>
+                <span asp-validation-for="RoomCategoryId" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Создать" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="RoomsList">Назад к списку</a>
+</div>
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/js/room_view.js"></script>

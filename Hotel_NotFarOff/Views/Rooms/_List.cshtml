@@ -4,14 +4,32 @@
     Layout = "~/Views/Shared/AdminLTE/_AdminPartialViewLayout.cshtml";
 }
 
-<link href="~/plugins/datatables-jquery/css/jquery.dataTables.min.css" rel="stylesheet" />
-<p>
-    <a asp-action="Create"><a asp-action="Create">Добавить новый</a></a>
-</p>
+@*<link href="~/plugins/datatables-jquery/css/jquery.dataTables.min.css" rel="stylesheet" />*@
 
-<table id="roomsTable" class="table table-bordered table-hover dataTable dtr-inline" style="width:100%">
+<a class='btn btn-primary btn-sm' style='margin-right:3px' asp-action="RoomCreate"><i class='fas fa-plus'></i>Добавить новый</a>
+
+<div id="filter">
+    <div>
+        <label>Категория номера</label>
+        <select id="roomCategories">
+            <option value=0>Все</option>
+        </select>
+    </div>
+    <div>
+        <label>Статус номера</label>
+        <select id="roomStatuses">
+            <option value="-1">Все</option>
+            <option value="0">Свободен</option>
+            <option value="1">Забронирован</option>
+        </select>
+    </div>
+</div>
+<table id="roomsTable" class="display responsive wrap" style="width:100%">
     <thead>
         <tr>
+            <th>
+                Id
+            </th>
             <th>
                 Номер комнаты
             </th>
@@ -26,5 +44,26 @@
             </th>
         </tr>
     </thead>
+    <tfoot>
+        <tr>
+            <th>
+                Id
+            </th>
+            <th>
+                Номер комнаты
+            </th>
+            <th>
+                Статус номера
+            </th>
+            <th>
+                Категория номера
+            </th>
+            <th>
+                Действия
+            </th>
+        </tr>
+    </tfoot>
 </table>
 
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/js/datatables_rooms.js"></script>

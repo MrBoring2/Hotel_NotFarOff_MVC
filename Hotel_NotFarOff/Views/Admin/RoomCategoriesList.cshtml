@@ -1,10 +1,12 @@
-﻿<form id="roomCategoriesForm" method="post" data-ajax="true" data-ajax-method="post" data-ajax-url="/RoomCategories/ForAdminList" data-ajax-update="#roomCategories-list" data-ajax-loading="#spinner">
-</form>
-
+﻿@*<form id="roomCategoriesForm" method="post" data-ajax="true" data-ajax-method="post" data-ajax-url="/RoomCategories/ForAdminList" data-ajax-update="#roomCategories-list" data-ajax-loading="#spinner">
+</form>*@
+@{
+    await Html.RenderPartialAsync("../RoomCategories/_ForAdminList");
+}
 <div id="spinner">
     <div id="cpinner-container">
         <div class="loader1"></div>
     </div>
 </div>
 
-<div id="roomCategories-list"> </div>
+@*<div id="roomCategories-list"> </div>*@

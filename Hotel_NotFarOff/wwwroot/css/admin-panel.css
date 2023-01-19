@@ -2,6 +2,12 @@
     display: none;
     margin-top: 15%;
 }
+#spinner-fixed {
+    display: none;
+    position: fixed;
+    margin-top: 15%;
+}
+
 #cpinner-container {
     display: flex;
     justify-content: center;

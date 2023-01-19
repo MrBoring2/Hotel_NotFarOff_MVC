@@ -1,0 +1,65 @@
+﻿@model Hotel_NotFarOff.Models.Entities.Booking
+@{
+    Layout = "~/Views/Shared/AdminLTE/_AdminPartialViewLayout.cshtml";
+}
+<h4>Редактирование бронирования</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post" data-ajax="true" data-ajax-method="post" data-ajax-complete="completed" data-ajax-url="/Booking/Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <input id="bookingStatus" type="hidden" value="@Model.BookingStatusId" />
+            <div class="form-group">
+                <label asp-for="TenantFio" class="control-label">ФИО заказчика</label>
+                <input asp-for="TenantFio" class="form-control" readonly="readonly" />
+                <span asp-validation-for="TenantFio" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PhoneNumber" class="control-label">Номер телефона заказчика</label>
+                <input asp-for="PhoneNumber" class="form-control" readonly="readonly" />
+                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Email" class="control-label">Почта заказчика</label>
+                <input asp-for="Email" class="form-control" readonly="readonly" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CheckIn" class="control-label">Дата заезда</label>
+                <input asp-for="CheckIn" class="form-control" readonly="readonly" />
+                <span asp-validation-for="CheckIn" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CheckOut" class="control-label">Дата выезда</label>
+                <input asp-for="CheckOut" class="form-control" readonly="readonly" />
+                <span asp-validation-for="CheckOut" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Room.RoomNumber" class="control-label">Номер комнаты</label>
+                <input asp-for="Room.RoomNumber" class="form-control" readonly="readonly" />
+                <span asp-validation-for="Room.RoomNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="BookingStatusId" class="control-label">Статус бронирования</label>
+                <select id="bookingStatuses" asp-for="BookingStatusId" class="form-control"></select>
+                <span asp-validation-for="BookingStatusId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PaymentMethod.Title" class="control-label">Способ оплаты</label>
+                <input asp-for="PaymentMethod.Title" class="form-control" readonly="readonly" />
+                <span asp-validation-for="PaymentMethod.Title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Сохранить" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="BookingList">Назад к списку</a>
+</div>
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/js/booking_view.js"></script>

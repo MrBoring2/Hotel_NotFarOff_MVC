@@ -1,0 +1,20 @@
+﻿@using Hotel_NotFarOff.Enums
+@using Hotel_NotFarOff.Models.Entities
+@using Hotel_NotFarOff.ViewModels
+@model TEntityPageViewModel<RoomCategoryViewModel>
+<div class="container">
+@{
+    if (Model.PageType == PageTypeEnum.Create)
+    {
+        await Html.RenderPartialAsync("../RoomCategories/_Create", Model.Entity);
+    }
+    else if (Model.PageType == PageTypeEnum.Edit)
+    {
+        await Html.RenderPartialAsync("../RoomCategories/_Edit", Model.Entity);
+    }
+    else if (Model.PageType == PageTypeEnum.Details)
+    {
+        await Html.RenderPartialAsync("../RoomCategories/_Details", Model.Entity);
+    }
+}
+</div>

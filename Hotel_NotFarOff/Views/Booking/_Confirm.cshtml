@@ -1,6 +1,6 @@
 ﻿@using Hotel_NotFarOff.Models.Entities
 @using Hotel_NotFarOff.ViewModels
-@model BookingViewModel
+@model GuestBookingViewModel
 <div class="col-lg-8" id="booking-confirm">
     <div class="booking-confirm-form">
         <div id="booking-confirm-row-cell">
@@ -61,7 +61,6 @@
     <div id="booking-confirm">
         <h4>Контактная информация</h4>
         <br />
-
         <div id="booking-contact-info">
             <form method="post" data-ajax="true" data-ajax-method="post" data-ajax-complete="completed" data-ajax-url="/Booking/Create">
                 <div>
@@ -105,9 +104,6 @@
                 <button type="submit" onclick="CreatedBooking()">Забронировать</button>
             </form>
         </div>
-
-
-
     </div>
 </div>
 
