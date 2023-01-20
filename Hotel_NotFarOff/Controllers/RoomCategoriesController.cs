@@ -161,7 +161,7 @@ namespace Hotel_NotFarOff.Controllers
                 roomCategory.Title = roomCategoryViewModel.Title;
                 roomCategory.RoomSize = roomCategoryViewModel.RoomSize;
                 roomCategory.RoomCount = roomCategoryViewModel.RoomCount;
-                if (roomCategoryViewModel.ServicesIds.Length > 0)
+                if (roomCategoryViewModel.ServicesIds != null && roomCategoryViewModel.ServicesIds.Length > 0)
                 {
                     foreach (var serviceid in roomCategoryViewModel.ServicesIds)
                     {

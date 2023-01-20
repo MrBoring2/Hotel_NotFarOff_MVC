@@ -1,3 +1,47 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@using Hotel_NotFarOff.ViewModels
+@{
+    ViewData["Title"] = "Главная";
 }
+@model AdminHomePageViewModel
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="card">
+                <div class="card-header border-0">
+                    <h3 class="card-title">Личная информация</h3>
+                </div>
+                <div class="card-body">
+                    <div class="d-flex">
+                        <img src="~/img/avatar5.png" style="width:20%; margin-right: 5px;" />
+                        <div class="form-group" style="margin-right: 15px;">
+                            <label asp-for="FullName" class="control-label">ФИО</label>
+                            <p>@Model.FullName</p>
+                        </div>
+                        <div class="form-group" style="margin-right: 15px;">
+                            <label asp-for="PostName" class="control-label">Должность</label>
+                            <p>@Model.PostName</p>
+                        </div>
+                        <div class="form-group" style="margin-right: 15px;">
+                            <label asp-for="Login" class="control-label">Имя пользователя</label>
+                            <p>@Model.Login</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="card">
+                <div class="card-header border-0">
+                    <h3 class="card-title">Задачи</h3>
+                </div>
+                <div class="card-body">
+                    <div class="d-flex">
+                        <div class="form-group">
+                            <p>Задач нет</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

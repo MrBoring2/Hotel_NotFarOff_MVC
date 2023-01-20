@@ -144,6 +144,7 @@ namespace Hotel_NotFarOff.Controllers
                 booking.Email = bookingViewModel.TenantEmail;
                 booking.PaymentMethodId = bookingViewModel.SelectedPaymentMethodId;
                 booking.Guests = new List<Guest>(bookingViewModel.Guests.Select(p => new Guest { FullName = p.FullName }));
+                booking.CreatedDate = DateTime.Now;
                 var room = (await _db.Rooms.FirstOrDefaultAsync(p => p.RoomCategoryId == bookingViewModel.BookingData.RoomCategoryId && p.IsBooked == false));
                 if (room != default && room != null)
                 {

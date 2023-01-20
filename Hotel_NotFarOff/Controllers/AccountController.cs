@@ -1,6 +1,8 @@
 ﻿using Hotel_NotFarOff.Contexts;
 using Hotel_NotFarOff.Enums;
+using Hotel_NotFarOff.Models;
 using Hotel_NotFarOff.Models.Entities;
+using Hotel_NotFarOff.Services;
 using Hotel_NotFarOff.ViewModels;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -11,6 +13,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
@@ -41,7 +44,7 @@ namespace Hotel_NotFarOff.Controllers
         {
             if (ModelState.IsValid)
             {
-                var employee = await _db.Employees.Include(p => p.Account).FirstOrDefaultAsync(p => p.Account.Login.Equals(vm.Login) && p.Account.Password.Equals(vm.Password));
+                var employee = await _db.Employees.Include(p => p.Account).Include(p => p.Post).AsQueryable().FirstOrDefaultAsync(p => p.Account.Login.Equals(vm.Login) && p.Account.Password.Equals(vm.Password));
 
                 //TODO: проверка пароля, загрузка пользователя из БД, и т.д. и т.п.
 
@@ -52,12 +55,23 @@ namespace Hotel_NotFarOff.Controllers
                         ModelState.AddModelError("", "У вас нет прав авторизоваться здесь.");
                         return View(vm);
                     }
-                    await Authenticate(employee);
 
-                    return RedirectToAction("Index", "Admin");
+                    var user = new User { Id = employee.Id.ToString(), Login = employee.Account.Login, PostId = employee.PostId };
+                    if (!ConnectingService.IsUserAuth(user.Id))
+                    {
+                        ConnectingService.AddUser(user);
+                        await Authenticate(employee);
+                        return RedirectToAction("Index", "Admin");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("", "Пользователь с таким логином уже авторизирован");
+                    }
                 }
-
-                ModelState.AddModelError("", "Неверные логин и(или) пароль");
+                else
+                {
+                    ModelState.AddModelError("", "Неверные логин и(или) пароль");
+                }
             }
             return View(vm);
         }
@@ -90,8 +104,16 @@ namespace Hotel_NotFarOff.Controllers
         }
         public async Task<IActionResult> LogOut()
         {
-            await HttpContext.SignOutAsync();
-            return RedirectToAction("Login", "Account");
+            var userId = HttpContext.User.Claims.First(p => p.Type == "Id").Value;
+            if (ConnectingService.RemoveUser(userId))
+            {
+                await HttpContext.SignOutAsync();
+                return RedirectToAction("Login", "Account");
+            }
+            else
+            {
+                return RedirectToAction("Index", "Admin");
+            }
         }
 
         private ActionResult RedirectToLocal(string returnUrl)

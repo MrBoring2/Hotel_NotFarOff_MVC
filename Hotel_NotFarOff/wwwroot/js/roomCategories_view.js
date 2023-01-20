@@ -55,7 +55,6 @@ $('#Services_dropdown').multi({
     search_placeholder: "Поиск..."
 });
 function updateImageDisplay(inputName, imageName) {
-    alert(inputName)
     if (inputName.files && inputName.files[0]) {
         var reader = new FileReader();
         reader.onload = function (e) {

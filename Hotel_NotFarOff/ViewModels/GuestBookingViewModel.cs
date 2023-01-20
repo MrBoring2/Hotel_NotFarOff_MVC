@@ -31,8 +31,8 @@ namespace Hotel_NotFarOff.ViewModels
             get
             {
                 string nights = "";
-                string number = NightCount.ToString();
-                int lastNumber = Convert.ToInt32(number[number.Length - 1]);
+                string number = Convert.ToString(NightCount);
+                int lastNumber = Convert.ToInt32(number[number.Length - 1].ToString());
                 int twoLastNumbers = number.Length > 1 ? Convert.ToInt32(number.Remove(0, number.Length - 2)) : lastNumber;
                 if (lastNumber >= 2 && lastNumber <= 4)
                 {

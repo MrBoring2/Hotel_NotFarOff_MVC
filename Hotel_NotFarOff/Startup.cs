@@ -7,11 +7,14 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.WebEncoders;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text.Encodings.Web;
 using System.Text.Unicode;
 using System.Threading.Tasks;
@@ -51,7 +54,6 @@ namespace Hotel_NotFarOff
                      options.LoginPath = new Microsoft.AspNetCore.Http.PathString("/Account/Login");
                  });
 
-
             //регистрируем хранилище
             //services.AddIdentity<IdentityUser, IdentityRole>()
             //        .AddEntityFrameworkStores<IdentityDbContext>();
@@ -70,7 +72,15 @@ namespace Hotel_NotFarOff
             }
             //app.UseResponseCompression();
             app.UseStaticFiles();
+            //var assemblyDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            //var assetDirectory = Path.Combine(assemblyDirectory, "wwwroot");
 
+            //// use it
+            //app.UseStaticFiles(new StaticFileOptions
+            //{
+            //    FileProvider = new PhysicalFileProvider(assetDirectory),
+            //    RequestPath = "/wwwroot"
+            //});
             app.UseRouting();
 
             app.UseAuthentication();

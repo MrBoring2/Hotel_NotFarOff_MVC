@@ -77,6 +77,7 @@ namespace Hotel_NotFarOff.Contexts
                 entity.Property(e => e.CheckIn).HasColumnType("datetime");
 
                 entity.Property(e => e.CheckOut).HasColumnType("datetime");
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.Email)
                     .IsRequired()

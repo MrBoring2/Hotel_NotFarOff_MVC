@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -21,10 +22,12 @@ namespace Hotel_NotFarOff.Controllers
             _logger = logger;
             _db = context;
         }
-        [Authorize]
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var employeeId = Convert.ToInt32(HttpContext.User.Claims.FirstOrDefault(p => p.Type == "Id").Value);
+            var employee = await _db.Employees.Include(p => p.Account).Include(p => p.Post).AsQueryable().FirstOrDefaultAsync(p => p.Id == employeeId);
+            var viewModel = new AdminHomePageViewModel(employee.FullName, employee.Post.Title, employee.Account.Login);
+            return View(viewModel);
         }
         public IActionResult RoomCategoriesList()
         {
@@ -45,7 +48,7 @@ namespace Hotel_NotFarOff.Controllers
         public IActionResult RoomCategoryCreate()
         {
             var viewModel = new RoomCategoryViewModel();
-            List<int> subjectsIds = new List<int>();           
+            List<int> subjectsIds = new List<int>();
             viewModel.Services = _db.Services.Select(p => new Microsoft.AspNetCore.Mvc.Rendering.SelectListItem
             {
                 Text = p.Title,

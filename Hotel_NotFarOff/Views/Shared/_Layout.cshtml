@@ -8,6 +8,8 @@
     <title>@ViewData["Title"] - Не за горами</title>
     <link href="https://fonts.googleapis.com/css?family=Lora:400,700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Cabin:400,500,600,700&display=swap" rel="stylesheet">
+    <link runat="server" rel="shortcut icon" href="~/icon.ico" type="image/x-icon" />
+    <link runat="server" rel="icon" href="~/icon.ico" type="image/ico" />
     <link rel="stylesheet" href="~/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/font-awesome.min.css" type="text/css" />
     <link rel="stylesheet" href="~/css/elegant-icons.css" type="text/css" />
@@ -37,6 +39,7 @@
                 <li class="@Html.IsActive("Home", "Index")"><a href="@Url.Action("Index", "Home")">Главная</a></li>
                 <li class="@Html.IsActive("RoomCategories", "List")"><a href="@Url.Action("List", "RoomCategories")">Номера</a></li>
                 <li class="@Html.IsActive("Home", "AboutUs")"><a href="@Url.Action("AboutUs", "Home")">О нас</a></li>
+                <li class="@Html.IsActive("Home", "Privacy")"><a href="@Url.Action("Privacy", "Home")">Политика конфидинциальности</a></li>
             </ul>
         </nav>
         <div id="mobile-menu-wrap"></div>
@@ -70,6 +73,7 @@
                                     <li class="@Html.IsActive("Home", "Index")"><a href="@Url.Action("Index", "Home")">Главная</a></li>
                                     <li class="@Html.IsActive("RoomCategories", "List")"><a href="@Url.Action("List", "RoomCategories")">Номера</a></li>
                                     <li class="@Html.IsActive("Home", "AboutUs")"><a href="@Url.Action("AboutUs", "Home")">О нас</a></li>
+                                    <li class="@Html.IsActive("Home", "Privacy")"><a href="@Url.Action("Privacy", "Home")">Политика конфидинциальности</a></li>
                                 </ul>
                             </nav>
                         </div>
@@ -123,7 +127,7 @@
                 <div class="row">
                     <div class="col-lg-7">
                         <ul>
-                            <li><a href="#">Политика безопасности</a></li>
+                            <li><a href="@Url.Action("Privacy", "Home")">Политика безопасности</a></li>
                         </ul>
                     </div>
                     <div class="col-lg-5">
@@ -146,12 +150,12 @@
     <script src="~/js/jquery-ui.min.js"></script>
     <script src="~/js/jquery.slicknav.js"></script>
     <script src="~/js/owl.carousel.min.js"></script>
-    <script src="~/js/main.js"></script> 
+    <script src="~/js/main.js"></script>
     <script src="~/lib/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.js"></script>
 
 
     @*  <script type="text/javascript" src="~/js/datepicker_ru.js"></script>*@
-   
+
     @await RenderSectionAsync("Booking", required: false)
     @await RenderSectionAsync("DatePickers", required: false)
 

@@ -15,6 +15,8 @@
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <link rel="stylesheet" href="~/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
     <link rel="stylesheet" href="~/css/adminlte.min.css">
+    <link runat="server" rel="shortcut icon" href="~/icon.ico" type="image/x-icon" />
+    <link runat="server" rel="icon" href="~/icon.ico" type="image/ico" />
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 </head>
 <body class="hold-transition login-page">
@@ -26,6 +28,7 @@
                 <p class="login-box-msg">Войдите, чтобы начать пользоваться админкой</p>
 
                 <form id="account" method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <span asp-validation-for="Login" class="text-danger small"></span>
                     <div class="input-group mb-3">
                         <input asp-for="Login" class="form-control" placeholder="Логин" />
@@ -60,5 +63,5 @@
     @section Scripts {
         <partial name="_ValidationScriptsPartial" />
     }
-</body>
-</html>
+    </body>
+    </html>

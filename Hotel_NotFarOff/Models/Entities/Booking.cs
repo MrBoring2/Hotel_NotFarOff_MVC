@@ -16,6 +16,7 @@ namespace Hotel_NotFarOff.Models.Entities
         public string Email { get; set; }
         public DateTime CheckIn { get; set; }
         public DateTime CheckOut { get; set; }
+        public DateTime CreatedDate { get; set; }
         public int RoomId { get; set; }
         public int BookingStatusId { get; set; }
         public int PaymentMethodId { get; set; }
