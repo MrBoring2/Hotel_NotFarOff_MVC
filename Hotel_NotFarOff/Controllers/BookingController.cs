@@ -32,8 +32,15 @@ namespace Hotel_NotFarOff.Controllers
             _logger = logger;
             _db = context;
         }
+        [HttpGet]
         [AllowAnonymous]
-        public async Task<IActionResult> IndexAsync(BookingData bookingData)
+        public async Task<IActionResult> Index()
+        {
+            return View(new GuestBookingViewModel(new BookingData { RoomCategoryId = 0, AdultCount = 1, CheckIn = DateTime.Now, CheckOut = DateTime.Now.AddDays(1), ChildCount = 0 }, await _db.PaymentMethods.ToListAsync()));
+        }
+        [HttpPost]
+        [AllowAnonymous]
+        public async Task<IActionResult> Index(BookingData bookingData)
         {
             if (ModelState.IsValid)
             {

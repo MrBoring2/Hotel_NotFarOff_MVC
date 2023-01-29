@@ -28,7 +28,11 @@ namespace Hotel_NotFarOff.Controllers
             _logger = logger;
             _db = context;
         }
-
+        /// <summary>
+        /// Метод контроллера авторизации
+        /// </summary>
+        /// <param name="returnUrl"></param>
+        /// <returns></returns>
         [HttpGet]
         [AllowAnonymous]
         public IActionResult Login(string returnUrl = null)
@@ -36,7 +40,11 @@ namespace Hotel_NotFarOff.Controllers
             ViewData["ReturnUrl"] = returnUrl;
             return View();
         }
-
+        /// <summary>
+        /// Метод контроллера авторизации
+        /// </summary>
+        /// <param name="vm">ViewModel передаваемая с клиента</param>
+        /// <returns></returns>
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -75,6 +83,11 @@ namespace Hotel_NotFarOff.Controllers
             }
             return View(vm);
         }
+        /// <summary>
+        /// Метод аутентификации
+        /// </summary>
+        /// <param name="employee">Сотрудник, который авторизуется</param>
+        /// <returns></returns>
         private async Task Authenticate(Employee employee)
         {
             // создаем один claim
@@ -94,14 +107,20 @@ namespace Hotel_NotFarOff.Controllers
 
             // установка аутентификационных куки
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
-                    principal,
-                    new AuthenticationProperties
-                    {
-                        ExpiresUtc = DateTime.UtcNow.AddMinutes(20)
-                    });
+                    principal);
+            //await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
+            //        principal,
+            //        new AuthenticationProperties
+            //        {
+            //            //ExpiresUtc = DateTime.UtcNow.AddMinutes(120)
+            //        });
 
             _logger.LogInformation(4, "Пользователь авторизовался.");
         }
+        /// <summary>
+        /// Метод выхода
+        /// </summary>
+        /// <returns></returns>
         public async Task<IActionResult> LogOut()
         {
             var userId = HttpContext.User.Claims.First(p => p.Type == "Id").Value;
@@ -109,18 +128,6 @@ namespace Hotel_NotFarOff.Controllers
             {
                 await HttpContext.SignOutAsync();
                 return RedirectToAction("Login", "Account");
-            }
-            else
-            {
-                return RedirectToAction("Index", "Admin");
-            }
-        }
-
-        private ActionResult RedirectToLocal(string returnUrl)
-        {
-            if (Url.IsLocalUrl(returnUrl))
-            {
-                return Redirect(returnUrl);
             }
             else
             {

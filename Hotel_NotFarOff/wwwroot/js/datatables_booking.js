@@ -50,6 +50,12 @@
             { data: "BookingStatus.Title", name: "BookingStatus.Title" },
             { data: "Room.RoomNumber", name: "Room.RoomNumber" },
             {
+                data: "CreatedDate", name: "CreatedDate", "render": function (data) {
+                    var date = new Date(Date.parse(data))
+                    return date.toLocaleString("ru")
+                }
+            },
+            {
                 "data": null,
                 "orderable": false,
                 "render": function (data, type, full, meta) {
