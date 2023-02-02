@@ -184,8 +184,17 @@ namespace Hotel_NotFarOff.Controllers
             {
                 try
                 {
-                    var bookingDb = await _db.Bookings.FirstOrDefaultAsync(p => p.Id == id);
+                    var bookingDb = await _db.Bookings.Include(p => p.Room).FirstOrDefaultAsync(p => p.Id == id);
                     bookingDb.BookingStatusId = booking.BookingStatusId;
+
+                    if (bookingDb.BookingStatusId == (int)BookingStatuses.Calncelled || bookingDb.BookingStatusId == (int)BookingStatuses.Compleated)
+                    {
+                        bookingDb.Room.IsBooked = false;
+                    }
+                    else if (bookingDb.BookingStatusId == (int)Enums.BookingStatuses.InProcess)
+                    {
+                        bookingDb.Room.IsBooked = true;
+                    }
                     await _db.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
